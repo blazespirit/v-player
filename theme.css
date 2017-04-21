@@ -1,0 +1,84 @@
+:root {
+  font-family: Roboto, Helvetica, sans-serif;
+  font-size: 5vh;
+}
+
+@font-face {
+  font-family: Roboto;
+  font-weight: 100;
+  font-style: normal;
+  src: url('./assets/font/Roboto-Thin.ttf');
+}
+
+@font-face {
+  font-family: Roboto;
+  font-weight: 300;
+  font-style: normal;
+  src: url('./assets/font/Roboto-Light.ttf');
+}
+
+@font-face {
+  font-family: Roboto;
+  font-weight: 500;
+  font-style: normal;
+  src: url('./assets/font/Roboto-Medium.ttf');
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+
+#v-player {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  background-image: url('./assets/img/wallpaper.png');
+  background-size: cover;
+  background-clip: border-box;
+  background-repeat: no-repeat;
+}
+
+#clock {
+  color: white;
+  font-weight: 100;
+  font-size: 2rem;
+  text-align: right;
+}
+
+#menu-item {
+  display: flex;
+  justify-content: space-around;
+  padding: 100px 0px 0px 0px;
+}
+
+#music {
+  background-image: url('./assets/icon/music-96-white.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 196px;
+  height:196px;
+  padding: 50px;
+  box-sizing: border-box;
+}
+
+#music:hover {
+  border: 2px solid #ffeb3b;
+}
+
+#movie {
+  background-image: url('./assets/icon/movie-96-white.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 196px;
+  height: 196px;
+  padding: 50px;
+  box-sizing: border-box;
+}
+
+#movie:hover {
+  border: 2px solid #ffeb3b;
+}

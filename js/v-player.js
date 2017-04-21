@@ -47,6 +47,34 @@ Vue.component('clock', {
   }
 })
 
+Vue.component('music', {
+  template: '<div id="music" v-bind:class="{ active: isActive }" @click="toggleActive"></div>',
+  data: function() {
+    return {
+      isActive: true
+    }
+  },
+  methods: {
+    toggleActive: function() {
+      this.isActive = !this.isActive;
+    }
+  }
+});
+
+Vue.component('movie', {
+  template: '<div id="movie" v-bind:class="{ active: isActive }" @click="toggleActive"></div>',
+  data: function() {
+    return {
+      isActive: true
+    }
+  },
+  methods: {
+    toggleActive: function() {
+      this.isActive = !this.isActive;
+    }
+  }
+});
+
 let vm = new Vue({
   el: '#v-player',
   template: `
@@ -55,8 +83,8 @@ let vm = new Vue({
         <clock></clock>
       </div>
       <div id="menu-item">
-        <div id="movie"></div>
-        <div id="music"></div>
+        <music></music>
+        <movie></movie>
       </div>
     </div>
   `,

@@ -1,6 +1,21 @@
 const Vue = require('vue');
+const Vuex = require('vuex');
 
 const { BrowserWindow } = require('electron').remote;
+
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  state: {
+    activeItem: ''
+  },
+  mutations: {
+    CHANGE_ACTIVE: function(state, dummyActive) {
+      state.activeItem = dummyActive;
+    }
+  }
+});
+
 
 Vue.component('clock', {
   template: `
@@ -49,28 +64,28 @@ Vue.component('clock', {
 
 Vue.component('music', {
   template: '<div id="music" v-bind:class="{ active: isActive }" @click="toggleActive"></div>',
-  data: function() {
-    return {
-      isActive: true
-    }
-  },
   methods: {
     toggleActive: function() {
-      this.isActive = !this.isActive;
+      store.commit('CHANGE_ACTIVE', 'music');
+    }
+  },
+  computed: {
+    isActive: function() {
+      return store.state.activeItem === 'music';
     }
   }
 });
 
 Vue.component('movie', {
   template: '<div id="movie" v-bind:class="{ active: isActive }" @click="toggleActive"></div>',
-  data: function() {
-    return {
-      isActive: true
-    }
-  },
   methods: {
     toggleActive: function() {
-      this.isActive = !this.isActive;
+      store.commit('CHANGE_ACTIVE', 'movie');
+    }
+  },
+  computed: {
+    isActive: function() {
+      return store.state.activeItem === 'movie';
     }
   }
 });

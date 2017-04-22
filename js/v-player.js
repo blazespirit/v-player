@@ -3,15 +3,19 @@ const Vuex = require('vuex');
 
 const { BrowserWindow } = require('electron').remote;
 
+const actionFlow = require('./js/action-flow'); // path relative to entry file 'index.html'.
+const gesture = require('./js/gesture-action');
+const menu = require('./js/menu-item');
+
 Vue.use(Vuex);
 
-const store = new Vuex.Store({
+const vuexStore = new Vuex.Store({
   state: {
-    activeItem: ''
+    activeItem: menu.MUSIC
   },
   mutations: {
-    CHANGE_ACTIVE: function(state, dummyActive) {
-      state.activeItem = dummyActive;
+    CHANGE_ACTIVE: function(state, actionObj) { // TODO -- too messy.
+      state.activeItem = actionObj.actionFlow.get(vuexStore.state.activeItem)[actionObj.gesture]();
     }
   }
 });
@@ -66,12 +70,12 @@ Vue.component('music', {
   template: '<div id="music" v-bind:class="{ active: isActive }" @click="toggleActive"></div>',
   methods: {
     toggleActive: function() {
-      store.commit('CHANGE_ACTIVE', 'music');
+      vuexStore.commit('CHANGE_ACTIVE', 'music');
     }
   },
   computed: {
     isActive: function() {
-      return store.state.activeItem === 'music';
+      return vuexStore.state.activeItem === 'music';
     }
   }
 });
@@ -80,12 +84,12 @@ Vue.component('movie', {
   template: '<div id="movie" v-bind:class="{ active: isActive }" @click="toggleActive"></div>',
   methods: {
     toggleActive: function() {
-      store.commit('CHANGE_ACTIVE', 'movie');
+      vuexStore.commit('CHANGE_ACTIVE', 'movie');
     }
   },
   computed: {
     isActive: function() {
-      return store.state.activeItem === 'movie';
+      return vuexStore.state.activeItem === 'movie';
     }
   }
 });
@@ -127,6 +131,12 @@ const configureSocketIO = function() {
 
     socket.on('action', function(action){
       console.log(`remote fire ${action} action.`);
+      if (action === gesture.SWIPE_LEFT) {
+        vuexStore.commit('CHANGE_ACTIVE', { actionFlow: actionFlow, gesture: gesture.SWIPE_LEFT});
+      }
+      else if (action === gesture.SWIPE_RIGHT) {
+        vuexStore.commit('CHANGE_ACTIVE', { actionFlow: actionFlow, gesture: gesture.SWIPE_RIGHT});
+      }
     });
 
     socket.on('disconnect', function(){

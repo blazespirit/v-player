@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "audiosource": "^3.0.2",
     "express": "^4.15.2",
+    "howler": "^2.0.3",
+    "media-library": "^1.2.4",
     "socket.io": "^1.7.3",
     "vue": "^2.2.6",
     "vuex": "^2.3.1"

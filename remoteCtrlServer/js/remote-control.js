@@ -32,3 +32,9 @@ gesture.on('swipedown', (ev) => {
   divEl.textContent = "swipe down";
   socket.emit('action', 'swipeDown');
 });
+
+gesture.on('tap', (ev) => {
+  divEl.textContent = "tap";
+  socket.emit('action', 'tap');
+});
+

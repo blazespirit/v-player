@@ -42,6 +42,7 @@ html, body {
   background-repeat: no-repeat;
 }
 
+/* clock component */
 #clock {
   color: white;
   font-weight: 100;
@@ -55,6 +56,7 @@ html, body {
   padding: 100px 0px 0px 0px;
 }
 
+/* music-library component */
 #music {
   background-image: url('./assets/icon/music-96-white.png');
   background-repeat: no-repeat;
@@ -69,6 +71,7 @@ html, body {
   border: 2px solid #ffeb3b;
 }
 
+/* movie-library component */
 #movie {
   background-image: url('./assets/icon/movie-96-white.png');
   background-repeat: no-repeat;
@@ -81,4 +84,84 @@ html, body {
 
 #movie.active {
   border: 2px solid #ffeb3b;
+}
+
+/* now-playing component */
+#now-playing {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  bottom: 0px;
+}
+
+#now-playing .album-art {
+  width: 20vh;
+  height: 20vh;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+#now-playing .track-info {
+  width: calc((100vw - 20vh) * 0.7);
+  background-color: rgba(0, 0, 255, 0.3);
+  color: white;
+}
+
+#now-playing .track-info .track-title {
+  height: 40%;
+  font-weight: 300;
+  font-size: calc(20vh * 0.3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+#now-playing .track-info .track-artist {
+  height: 30%;
+  font-weight: 100;
+  font-size: calc(20vh * 0.2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+#now-playing .track-info .track-album {
+  height: 30%;
+  font-weight: 100;
+  font-size: calc(20vh * 0.2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+#now-playing .track-control {
+  width: calc((100vw - 20vh) * 0.3);
+  display: flex;
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+#now-playing .track-control .previous-track {
+  width: 33%;
+  background-image: url('./assets/icon/previous-96-white.png');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#now-playing .track-control .play-pause {
+  width: 33%;
+  background-image: url('./assets/icon/play-96-white.png');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#now-playing .track-control .next-track {
+  width: 33%;
+  background-image: url('./assets/icon/next-96-white.png');
+  background-position: center;
+  background-repeat: no-repeat;
 }

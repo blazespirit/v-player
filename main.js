@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, globalShortcut } = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -24,7 +24,7 @@ function createWindow () {
   }));
 
   // Open the DevTools.
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -33,12 +33,21 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   });
+
+  const toogleDev = globalShortcut.register('Ctrl + F12', function(){
+    win.webContents.toggleDevTools();
+  });
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
+
+app.on('will-quit', () => {
+  // Unregister all shortcuts.
+  globalShortcut.unregisterAll()
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {

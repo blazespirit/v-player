@@ -1,25 +1,34 @@
 const { BrowserWindow } = require('electron').remote;
 
 const Vue = require('vue');
-const Vuex = require('vuex');
-const store = require('./app/vuex-store'); // path relative to entry file 'index.html'.
+const vuexStore = require('./app/vuex-store'); // path relative to entry file 'index.html'.
+const vueRouter = require('./app/vue-router/router');
 const clock = require('./app/component/clock');
-const musicLibrary = require('./app/component/music-library');
-const movieLibrary = require('./app/component/movie-library');
+const home = require('./app/component/home');
 const nowPlaying = require('./app/component/now-playing');
+const trackList = require('./app/component/track-list');
+
+// register component at 'global' scope.
+// eg, popup dialog.
+// Vue.component('music', musicLibrary);
+// Vue.component('movie', movieLibrary);
 
 let vm = new Vue({
   el: '#v-player',
-  store,
+  store: vuexStore,
+  router: vueRouter,
   template: `
     <div id="v-player">
       <div id="clock">
         <clock></clock>
       </div>
-      <div id="menu-item">
-        <music></music>
-        <movie></movie>
-      </div>
+      <button>
+        <router-link to="/">Go to home</router-link>
+      </button>
+      <button>
+        <router-link to="/track-list">Go to track list</router-link>
+      </button>
+      <router-view></router-view>
       <now-playing></now-playing>
     </div>
   `,
@@ -29,9 +38,9 @@ let vm = new Vue({
   },
   components: {
     'clock': clock,
-    'music': musicLibrary,
-    'movie': movieLibrary,
-    'now-playing': nowPlaying
+    'home': home,
+    'now-playing': nowPlaying,
+    'track-list': trackList
   }
 });
 
@@ -52,7 +61,7 @@ var library = new MediaLibrary({
   // persistent storage location (optional)
   dataPath: './',
   // the paths to scan
-  paths: [ 'C:\\Users\\blaze_spirit\\Desktop\\v-player\\TESTING' ]
+  paths: [ 'C:\\Users\\blaze_spirit\\Desktop\\testing-groud\\music-library' ]
 });
 
 // Scanning files (only needed at first start and when paths are added)
@@ -73,7 +82,6 @@ library.scan()
 const howler = require('howler');
 
 mediaLibraryEvent.on('playTrack', () => {
-  console.log('let sing ~');
   let track = new Howl({
     src: [global_tracks[1].path],
     html5: true

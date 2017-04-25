@@ -1,8 +1,8 @@
 const musicLibrary = {
-  template: `<div id="music" v-bind:class="{ active: isActive }" @click="toggleActive"></div>`,
+  template: `<div id="music" v-bind:class="{ active: isActive }" @click="goToMusic"></div>`,
   methods: {
-    toggleActive: function() {
-      this.$store.commit('CHANGE_ACTIVE', 'music');
+    goToMusic: function() {
+      this.$router.push('track-list');
     }
   },
   computed: {

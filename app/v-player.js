@@ -6,7 +6,8 @@ const vueRouter = require('./app/vue-router/router');
 const clock = require('./app/component/clock');
 const home = require('./app/component/home');
 const nowPlaying = require('./app/component/now-playing');
-const trackList = require('./app/component/track-list');
+const musicLibrary = require('./app/component/music-library');
+const movieLibrary = require('./app/component/movie-library');
 
 // register component at 'global' scope.
 // eg, popup dialog.
@@ -22,12 +23,6 @@ let vm = new Vue({
       <div id="clock">
         <clock></clock>
       </div>
-      <button>
-        <router-link to="/">Go to home</router-link>
-      </button>
-      <button>
-        <router-link to="/track-list">Go to track list</router-link>
-      </button>
       <router-view></router-view>
       <now-playing></now-playing>
     </div>
@@ -39,16 +34,18 @@ let vm = new Vue({
   components: {
     'clock': clock,
     'home': home,
-    'now-playing': nowPlaying,
-    'track-list': trackList
+    'music-library': musicLibrary,
+    'movie-library': movieLibrary,
+    'now-playing': nowPlaying
   }
 });
 
 // ===== remote control server =====
 require('./app/remote-control-server').startServer();
 
+// ===== music-library-manager =====
+const musicLibraryManager = require('./app/music-library/music-library-manager');
 
-// ===== media-library =====
 let global_tracks;
 const EventEmitter = require('events');
 const mediaLibraryEvent = new EventEmitter();

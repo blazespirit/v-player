@@ -1,5 +1,7 @@
 const trackList = {
-  template: `<div id="track-list">Track List</div>`,
+  template: `
+    <div id="track-list">Track List</div>
+  `,
   methods: {
     toggleActive: function() {
       //this.$store.commit('CHANGE_ACTIVE', 'music');

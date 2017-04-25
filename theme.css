@@ -1,6 +1,7 @@
 :root {
   font-family: Roboto, Helvetica, sans-serif;
   font-size: 5vh;
+  color: white;
 }
 
 @font-face {
@@ -44,7 +45,6 @@ html, body {
 
 /* clock component */
 #clock {
-  color: white;
   font-weight: 100;
   font-size: 2rem;
   text-align: right;
@@ -56,7 +56,7 @@ html, body {
   padding: 100px 0px 0px 0px;
 }
 
-/* music-library component */
+/* music menu component */
 #music {
   background-image: url('./assets/icon/music-96-white.png');
   background-repeat: no-repeat;
@@ -71,7 +71,7 @@ html, body {
   border: 2px solid #ffeb3b;
 }
 
-/* movie-library component */
+/* movie menu component */
 #movie {
   background-image: url('./assets/icon/movie-96-white.png');
   background-repeat: no-repeat;
@@ -103,7 +103,6 @@ html, body {
 #now-playing .track-info {
   width: calc((100vw - 20vh) * 0.7);
   background-color: rgba(0, 0, 255, 0.3);
-  color: white;
 }
 
 #now-playing .track-info .track-title {
@@ -164,4 +163,37 @@ html, body {
   background-image: url('./assets/icon/next-96-white.png');
   background-position: center;
   background-repeat: no-repeat;
+}
+
+/* music-library component */
+#music-library {
+  width: 50vw;
+  margin: auto;
+  font-weight: 300;
+}
+
+#music-library .category {
+  display: flex;
+  justify-content: space-between;
+}
+
+#music-library .category .song,
+#music-library .category .album,
+#music-library .category .artist {
+  width: 30%;
+  padding: 5px;
+  text-align: center;
+  border: 2px solid lightblue;
+}
+
+#music-library .song-list {
+  height: 100%;
+  background-color: rgba(0, 255, 0, 0.3);
+}
+
+/* movie-library component */
+#movie-library {
+  width: 60vw;
+  margin: auto;
+  font-weight: 300;
 }

@@ -1,16 +1,25 @@
-const musicLibrary = require('./music-library');
-const movieLibrary = require('./movie-library');
-
 const home = {
   template: `
     <div id="menu-item">
-      <music></music>
-      <movie></movie>
+      <div id="music" v-bind:class="{ active: musicFocus }" @click="goToMusicLibrary"></div>
+      <div id="movie" v-bind:class="{ active: movieFocus }" @click="goToMovieLibrary"></div>
     </div>
   `,
-  components: {
-    'music': musicLibrary,
-    'movie': movieLibrary
+  methods: {
+    goToMusicLibrary: function() {
+      this.$router.push('music-library');
+    },
+    goToMovieLibrary: function() {
+      this.$router.push('movie-library');
+    },
+  },
+  computed: {
+    musicFocus: function() {
+      return this.$store.state.activeItem === 'music';
+    },
+    movieFocus: function() {
+      return this.$store.state.activeItem === 'movie';
+    }
   }
 };
 

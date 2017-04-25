@@ -2,21 +2,23 @@ const Vue = require('vue');
 const VueRouter = require('vue-router');
 
 const home = require('../component/home');
-const trackList = require('../component/track-list');
+const musicLibrary = require('../component/music-library');
+const movieLibrary = require('../component/movie-library');
 
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '/', component: home },
-  { path: '/track-list', component: trackList }
+  { path: '/home', component: home },
+  { path: '/music-library', component: musicLibrary },
+  { path: '/movie-library', component: movieLibrary }
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'abstract', // 'hash' or 'abstract' mode allow router.push() method to work before any router-link click.
   routes // short for routes: routes
 });
 
 // init.
-router.replace('/');
+router.replace('home');
 
 module.exports = router;

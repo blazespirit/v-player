@@ -43,11 +43,41 @@ html, body {
   background-repeat: no-repeat;
 }
 
-/* clock component */
-#clock {
+#top-panel {
+  height: 15vh;
+  display: flex;
+  justify-content: space-between;
   font-weight: 100;
   font-size: 2rem;
+}
+
+/* view-label component */
+#view-label {
+  padding-left: 15px;
+}
+
+/* clock component */
+#clock {
+  display: flex;
+  align-items: baseline;
+  padding-right: 15px;
+}
+
+#clock .time {
   text-align: right;
+  padding-right: 15px;
+}
+
+#clock .am-pm {
+  font-size: 1rem;
+}
+
+#bottom-panel {
+  height: 15vh;
+}
+
+#middle-panel {
+  height: 70vh;
 }
 
 #menu-item {
@@ -90,25 +120,23 @@ html, body {
 #now-playing {
   display: flex;
   background-color: rgba(0, 0, 0, 0.3);
-  position: absolute;
-  bottom: 0px;
 }
 
 #now-playing .album-art {
-  width: 20vh;
-  height: 20vh;
+  width: 15vh;
+  height: 15vh;
   background-color: rgba(0, 0, 0, 0.3);
 }
 
 #now-playing .track-info {
-  width: calc((100vw - 20vh) * 0.7);
+  width: calc((100vw - 15vh) * 0.7);
   background-color: rgba(0, 0, 255, 0.3);
 }
 
 #now-playing .track-info .track-title {
   height: 40%;
   font-weight: 300;
-  font-size: calc(20vh * 0.3);
+  font-size: calc(15vh * 0.3);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -119,7 +147,7 @@ html, body {
 #now-playing .track-info .track-artist {
   height: 30%;
   font-weight: 100;
-  font-size: calc(20vh * 0.2);
+  font-size: calc(15vh * 0.2);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -130,7 +158,7 @@ html, body {
 #now-playing .track-info .track-album {
   height: 30%;
   font-weight: 100;
-  font-size: calc(20vh * 0.2);
+  font-size: calc(15vh * 0.2);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -139,7 +167,7 @@ html, body {
 }
 
 #now-playing .track-control {
-  width: calc((100vw - 20vh) * 0.3);
+  width: calc((100vw - 15vh) * 0.3);
   display: flex;
   background-color: rgba(255, 0, 0, 0.3);
 }
@@ -193,7 +221,7 @@ html, body {
 
 /* movie-library component */
 #movie-library {
-  width: 60vw;
+  width: 50vw;
   margin: auto;
   font-weight: 300;
 }

@@ -7,7 +7,7 @@ const musicLibrary = {
         <div class="album">Albums</div>
         <div class="artist">Artists</div>
       </div>
-      <div class="song-list">Songs list here</div>
+      <div class="song-list" v-for="n in 10">Songs list here</div>
     </div>
   `,
   methods: {

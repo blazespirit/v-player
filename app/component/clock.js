@@ -1,7 +1,8 @@
 const clock = {
   template: `
-    <div @click="closeApp">
-      {{ hour }}:{{ minute }}:{{ second }} {{ timeConvention }}
+    <div id="clock" @click="closeApp">
+      <div class="time">{{ hour }}:{{ minute }}:{{ second }}</div>
+      <div class="am-pm">{{ timeConvention }}</div>
     </div>
   `,
   data: function() {

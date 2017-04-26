@@ -3,6 +3,7 @@ const { BrowserWindow } = require('electron').remote;
 const Vue = require('vue');
 const vuexStore = require('./app/vuex-store'); // path relative to entry file 'index.html'.
 const vueRouter = require('./app/vue-router/router');
+const viewLabel = require('./app/component/view-label');
 const clock = require('./app/component/clock');
 const home = require('./app/component/home');
 const nowPlaying = require('./app/component/now-playing');
@@ -20,11 +21,16 @@ let vm = new Vue({
   router: vueRouter,
   template: `
     <div id="v-player">
-      <div id="clock">
+      <div id="top-panel">
+        <view-label></view-label>
         <clock></clock>
       </div>
-      <router-view></router-view>
-      <now-playing></now-playing>
+      <div id="middle-panel">
+        <router-view></router-view>
+      </div>
+      <div id="bottom-panel">
+        <now-playing></now-playing>
+      </div>
     </div>
   `,
   data: {
@@ -32,6 +38,7 @@ let vm = new Vue({
     str2: 'music library'
   },
   components: {
+    'view-label': viewLabel,
     'clock': clock,
     'home': home,
     'music-library': musicLibrary,

@@ -1,8 +1,10 @@
 const Vue = require('vue');
 const Vuex = require('vuex');
 
-const LANGUAGE = require('./locale-string').LANGUAGE;
-const STR = require('./locale-string').STR;
+const { LANGUAGE,
+        VIEW,
+        FOCUS_ITEM,
+        STR } = require('./config-constant');
 
 const actionFlow = require('./action-flow');
 const gesture = require('./gesture-action');
@@ -13,7 +15,9 @@ Vue.use(Vuex);
 const vuexStore = new Vuex.Store({
   state: {
     language: LANGUAGE.ENGLISH,
-    currentView: 'home',
+    currentView: VIEW.HOME,
+    focused: FOCUS_ITEM.MUSIC_LIBRARY,
+
     activeItem: menu.MUSIC
   },
   mutations: {
@@ -35,11 +39,10 @@ const vuexStore = new Vuex.Store({
   },
   getters: {
     getViewLabel: function(state) {
-      // viewLabel: STR.VIEW_LABEL.HOME[language],
-      if (STR.VIEW_LABEL.MUSIC[state.language]) {
-        return STR.VIEW_LABEL.MUSIC[state.language];
+      if (STR.VIEW_LABEL[state.currentView][state.language]) {
+        return STR.VIEW_LABEL[state.currentView][state.language];
       } else {
-        return STR.VIEW_LABEL.MUSIC.DEFAULT;
+        return STR.VIEW_LABEL[state.currentView].DEFAULT;
       }
     }
   }

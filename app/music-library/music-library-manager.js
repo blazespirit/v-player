@@ -1,10 +1,10 @@
-const MediaLibrary = require('media-library');
+// const MediaLibrary = require('media-library');
 
-const musicLibraryManager = new MediaLibrary({
-  dataPath: './app/music-library',
-  paths: [ 'C:\\Users\\blaze_spirit\\Desktop\\testing-groud\\music-library' ]
-});
+// const musicLibraryManager = new MediaLibrary({
+//   dataPath: './app/music-library',
+//   paths: [ 'C:\\Users\\blaze_spirit\\Desktop\\testing-groud\\music-library' ]
+// });
 
-musicLibraryManager.scan();
+// musicLibraryManager.scan();
 
-module.exports = musicLibraryManager;
+// module.exports = musicLibraryManager;

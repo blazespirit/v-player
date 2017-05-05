@@ -11,7 +11,7 @@ function createWindow () {
   win = new BrowserWindow({
     fullscreen: true, // launch the app in full screen.
     frame: false,     // create frameless window.
-    resizable: false, // disable resize.
+    // resizable: false, // disable resize. *note: on raspbian, set this to false will disable full screen.
     // width: 800,
     // height: 600
   });
@@ -65,29 +65,3 @@ app.on('activate', () => {
     createWindow()
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
-
-// // ===================== express server =====================
-// const express = require('express');
-
-// const remoteCtrlServer = express();
-
-// const configureServer = function() {
-//   // server remote control webapp file.
-//   remoteCtrlServer.use('/remote', express.static('remoteCtrlServer'));
-// }
-
-// const listen = function(port) {
-//   remoteCtrlServer.listen(port, () => {
-//     console.log(`Remote Control Server started: http://localhost:${port}/`);
-//   });
-// }
-
-// const startServer = function() {
-//   configureServer();
-//   listen(3000);
-// }
-
-// startServer();

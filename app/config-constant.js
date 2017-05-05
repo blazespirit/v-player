@@ -44,11 +44,17 @@ const STR = {
   }
 };
 
+const MUSIC = {
+  TRACK_PER_PAGE: 10
+}
+
 module.exports = {
   LANGUAGE: LANGUAGE,
   VIEW: VIEW,
   FOCUS_ITEM: FOCUS_ITEM,
   GESTURE: GESTURE,
+
+  MUSIC: MUSIC,
   
   STR: STR
 }

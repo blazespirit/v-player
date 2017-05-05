@@ -16,12 +16,12 @@ const nowPlaying = {
   `,
   methods: {
     toggleActive: function() {
-      this.$store.commit('CHANGE_ACTIVE', 'music');
+      // this.$store.commit('CHANGE_ACTIVE', 'music');
     }
   },
   computed: {
     isActive: function() {
-      return this.$store.state.activeItem === 'music';
+      // return this.$store.state.activeItem === 'music';
     }
   }
 };

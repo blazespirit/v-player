@@ -1,3 +1,5 @@
+const CONFIG = require('../config-constant');
+
 const home = {
   template: `
     <div id="menu-item">
@@ -8,17 +10,19 @@ const home = {
   methods: {
     goToMusicLibrary: function() {
       this.$router.push('music-library');
+      this.$store.commit('CHANGE_CURRENT_VIEW', CONFIG.VIEW.MUSIC);
     },
     goToMovieLibrary: function() {
       this.$router.push('movie-library');
+      this.$store.commit('CHANGE_CURRENT_VIEW', CONFIG.VIEW.MOVIE);
     },
   },
   computed: {
     musicFocus: function() {
-      return this.$store.state.activeItem === 'music';
+      return this.$store.state.focused === CONFIG.FOCUS_ITEM.MUSIC_LIBRARY;
     },
     movieFocus: function() {
-      return this.$store.state.activeItem === 'movie';
+      return this.$store.state.focused === CONFIG.FOCUS_ITEM.MOVIE_LIBRARY;
     }
   }
 };

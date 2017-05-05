@@ -1,24 +1,27 @@
 const musicLibrary = {
   template: `
     <div id="music-library">
-      <div>Music Library</div>
-      <div class="category">
-        <div class="song">Songs</div>
-        <div class="album">Albums</div>
-        <div class="artist">Artists</div>
+      <div class="label">Track List</div>
+      <div class="song-list">
+        <div class="track" v-for="track in trackList"> {{ track.title }} </div>
       </div>
-      <div class="song-list" v-for="n in 10">Songs list here</div>
     </div>
   `,
   methods: {
-    toggleActive: function() {
-      //this.$store.commit('CHANGE_ACTIVE', 'music');
+    nextPage: function() { // TODO -- last page limit handling.
+      this.$store.commit('GET_TRACK_LIST_NEXT_PAGE');
+    },
+    previousPage: function() {
+      this.$store.commit('GET_TRACK_LIST_PREVIOUS_PAGE');
     }
   },
   computed: {
-    isActive: function() {
-      //return this.$store.state.activeItem === 'music';
+    trackList: function() {
+      return this.$store.getters.getTrackList;
     }
+  },
+  created: function() {
+    this.$store.commit('GET_TRACK_LIST');
   }
 };
 

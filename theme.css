@@ -2,6 +2,7 @@
   font-family: Roboto, Helvetica, sans-serif;
   font-size: 5vh;
   color: white;
+  user-select: none;
 }
 
 @font-face {
@@ -44,11 +45,11 @@ html, body {
 }
 
 #top-panel {
-  height: 15vh;
+  height: 10vh;
   display: flex;
   justify-content: space-between;
   font-weight: 100;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 /* view-label component */
@@ -77,7 +78,7 @@ html, body {
 }
 
 #middle-panel {
-  height: 70vh;
+  height: 75vh;
 }
 
 #menu-item {
@@ -195,9 +196,10 @@ html, body {
 
 /* music-library component */
 #music-library {
-  width: 50vw;
+  width: 60vw;
   margin: auto;
   font-weight: 300;
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 #music-library .category {
@@ -214,9 +216,33 @@ html, body {
   border: 2px solid lightblue;
 }
 
+#music-library .label {
+  height: 6.7vh;
+  padding: 5px 0px 0px 15px;
+  border-bottom: 0.3vh solid #18FFFF;
+}
+
 #music-library .song-list {
   height: 100%;
-  background-color: rgba(0, 255, 0, 0.3);
+}
+
+#music-library .song-list .track {
+  height: calc((67vh - 60px) / 10);
+  line-height: calc((67vh - 60px) / 10);
+  box-sizing: border-box;
+  padding: 0px 15px 0px 15px;
+  margin: 6px 0px 6px 0px;
+  font-size: 1rem;
+  font-weight: 100;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+#music-library .song-list .track.focus {
+  background-color: rgba(255,255,255, 0.35);
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 1);
 }
 
 /* movie-library component */

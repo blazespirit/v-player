@@ -9,7 +9,6 @@ gesture.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 // disable unused gestures.
 gesture.get('pan').set({ enable: false });
 gesture.get('pinch').set({ enable: false });
-gesture.get('press').set({ enable: false });
 gesture.get('rotate').set({ enable: false });
 
 // TODO -- define the config in remote control webapp too.
@@ -38,3 +37,7 @@ gesture.on('tap', (ev) => {
   socket.emit('action', 'tap');
 });
 
+gesture.on('press', (ev) => {
+  divEl.textContent = "press";
+  socket.emit('action', 'press');
+});

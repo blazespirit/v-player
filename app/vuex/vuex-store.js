@@ -3,25 +3,25 @@ const Vuex = require('vuex');
 
 const { LANGUAGE,
         VIEW,
-        FOCUS_ITEM,
+        FOCUSABLE_ITEM,
         STR,
-        MUSIC } = require('./config-constant');
+        MUSIC } = require('../config-constant');
 
-const actionFlow = require('./action-flow');
-const gesture = require('./gesture-action');
+const actionFlow = require('../action-flow');
 
-const musicManager = require('./music-library/music-manager');
+const musicManager = require('../music-library/music-manager');
 
 Vue.use(Vuex);
 
 const vuexStore = new Vuex.Store({
+  strict: true, // strict mode.
   state: {
     // application settings
     language: LANGUAGE.ENGLISH,
 
     // state for GUI
     currentView: VIEW.HOME,
-    focused: FOCUS_ITEM.MUSIC_LIBRARY,
+    focused: FOCUSABLE_ITEM.MUSIC_LIBRARY,
 
     // state for music library.
     musicLibrary: {
@@ -35,12 +35,14 @@ const vuexStore = new Vuex.Store({
     CHANGE_CURRENT_VIEW: function(state, view) {
       state.currentView = view;
     },
-    CHANGE_ACTIVE: function(state, actionObj) {
-      let actionFlowObj = actionObj.actionFlow.get(vuexStore.state.focused);
-      let gestureFunc = actionFlowObj[actionObj.gesture];
-
-      if (gestureFunc) {
-        state.focused = gestureFunc();
+    NAVIGATION_ACTION: function(state, actionObj) {
+      let stateObj = actionFlow(state.focused, actionObj.gesture);
+      
+      if (stateObj.noop) {
+        return;
+      }
+      if (stateObj.focus) {
+        state.focused = stateObj.focus;
       }
     },
     GET_TRACK_LIST: function(state) {

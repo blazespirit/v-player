@@ -1,7 +1,7 @@
 const { BrowserWindow } = require('electron').remote;
 
 const Vue = require('vue');
-const vuexStore = require('./app/vuex-store'); // path relative to entry file 'index.html'.
+const vuexStore = require('./app/vuex/vuex-store'); // path relative to entry file 'index.html'.
 const vueRouter = require('./app/vue-router/router');
 const viewLabel = require('./app/component/view-label');
 const clock = require('./app/component/clock');

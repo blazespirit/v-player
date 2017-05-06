@@ -5,8 +5,7 @@ const http = require('http').Server(remoteCtrlServer);
 const io = require('socket.io')(http);
 const path = require('path');
 
-const vuexStore = require('./vuex-store');
-const actionFlow = require('./action-flow');
+const vuexStore = require('./vuex/vuex-store');
 
 const configureServer = function() {
   // serve remote control webapp file.
@@ -19,7 +18,7 @@ const configureSocketIO = function() {
 
     socket.on('action', function(action){
       console.log(`remote fire ${action} action.`);
-      vuexStore.commit('CHANGE_ACTIVE', { actionFlow: actionFlow, gesture: action});
+      vuexStore.commit('NAVIGATION_ACTION', { gesture: action });
     });
 
     socket.on('disconnect', function(){

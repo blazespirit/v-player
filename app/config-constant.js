@@ -9,7 +9,7 @@ const VIEW = {
   MOVIE: 'movie'
 }
 
-const FOCUS_ITEM = {
+const FOCUSABLE_ITEM = {
   MUSIC_LIBRARY: 'musicLibrary',
   MOVIE_LIBRARY: 'movieLibrary',
   PLAY_BUTTON: 'playButton',
@@ -18,10 +18,12 @@ const FOCUS_ITEM = {
 }
 
 const GESTURE = {
-  SWIPE_LEFT: 'swipeLeft',
+  SWIPE_LEFT : 'swipeLeft',
   SWIPE_RIGHT: 'swipeRight',
-  SWIPE_TOP: 'swipeTop',
-  SWIPE_DOWN: 'swipeDown'
+  SWIPE_UP   : 'swipeUp',
+  SWIPE_DOWN : 'swipeDown',
+  TAP        : 'tap',
+  PRESS      : 'press'
 }
 
 const STR = {
@@ -51,7 +53,7 @@ const MUSIC = {
 module.exports = {
   LANGUAGE: LANGUAGE,
   VIEW: VIEW,
-  FOCUS_ITEM: FOCUS_ITEM,
+  FOCUSABLE_ITEM: FOCUSABLE_ITEM,
   GESTURE: GESTURE,
 
   MUSIC: MUSIC,

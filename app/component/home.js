@@ -19,12 +19,20 @@ const home = {
   },
   computed: {
     musicFocus: function() {
-      return this.$store.state.focused === CONFIG.FOCUS_ITEM.MUSIC_LIBRARY;
+      return this.$store.state.focused === CONFIG.FOCUSABLE_ITEM.MUSIC_LIBRARY;
     },
     movieFocus: function() {
-      return this.$store.state.focused === CONFIG.FOCUS_ITEM.MOVIE_LIBRARY;
+      return this.$store.state.focused === CONFIG.FOCUSABLE_ITEM.MOVIE_LIBRARY;
+    },
+    viewChange: function() {
+      return this.$store.state.currentView;
     }
-  }
+  },
+  watch: {
+    viewChange: function (view) {
+      console.log(view);
+    }
+  },
 };
 
 module.exports = home;

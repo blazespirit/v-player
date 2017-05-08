@@ -1,4 +1,5 @@
 const { GESTURE,
+        VIEW,
         FOCUSABLE_ITEM } = require('./config-constant');
 
 
@@ -8,9 +9,22 @@ const stateActionMap = new Map();
 const musicActionMap = new Map([
   // key & value pair array.
   [ GESTURE.SWIPE_LEFT,  { noop: true } ], // no operation.
-  [ GESTURE.SWIPE_RIGHT, { focus: FOCUSABLE_ITEM.MOVIE_LIBRARY } ],
+  [ GESTURE.SWIPE_RIGHT, { focus: FOCUSABLE_ITEM.MOVIE_LIBRARY }],
   [ GESTURE.SWIPE_UP,    { noop: true } ],
   [ GESTURE.SWIPE_DOWN,  { noop: true } ],
+  [ GESTURE.TAP,         { view: VIEW.MUSIC, 
+                           focus: FOCUSABLE_ITEM.TRACK_LIST,
+                           focusIndex: 1 } ],
+  [ GESTURE.PRESS,       { noop: true } ]
+]);
+
+// action map for track list in music-library
+const trackListActionMap = new Map([
+  // key & value pair array.
+  [ GESTURE.SWIPE_LEFT,  { noop: true } ], // no operation.
+  [ GESTURE.SWIPE_RIGHT, { noop: true } ],
+  [ GESTURE.SWIPE_UP,    { focusIndexMinus: 1 } ],
+  [ GESTURE.SWIPE_DOWN,  { focusIndexPlus: 1 } ],
   [ GESTURE.TAP,         { noop: true } ],
   [ GESTURE.PRESS,       { noop: true } ]
 ]);
@@ -22,7 +36,40 @@ const movieActionMap = new Map([
   [ GESTURE.SWIPE_RIGHT, { noop: true } ], // no operation.
   [ GESTURE.SWIPE_UP,    { noop: true } ],
   [ GESTURE.SWIPE_DOWN,  { noop: true } ],
-  [ GESTURE.TAP,         { noop: true } ],
+  [ GESTURE.TAP,         { view: VIEW.MOVIE } ],
+  [ GESTURE.PRESS,       { noop: true } ]
+]);
+
+// action map for play button in now-playing.
+const playButtonActionMap = new Map([
+  // key & value pair array.
+  [ GESTURE.SWIPE_LEFT,  { focus: FOCUSABLE_ITEM.PREVIOUS_BUTTON } ],
+  [ GESTURE.SWIPE_RIGHT, { focus: FOCUSABLE_ITEM.NEXT_BUTTON } ],
+  [ GESTURE.SWIPE_UP,    { upFromNowPlaying: true } ],
+  [ GESTURE.SWIPE_DOWN,  { noop: true } ],
+  [ GESTURE.TAP,         { togglePlayPause: true } ],
+  [ GESTURE.PRESS,       { noop: true } ]
+]);
+
+// action map for previous button in now-playing.
+const previousButtonActionMap = new Map([
+  // key & value pair array.
+  [ GESTURE.SWIPE_LEFT,  { noop: true } ],
+  [ GESTURE.SWIPE_RIGHT, { focus: FOCUSABLE_ITEM.PLAY_BUTTON } ],
+  [ GESTURE.SWIPE_UP,    { upFromNowPlaying: true } ],
+  [ GESTURE.SWIPE_DOWN,  { noop: true } ],
+  [ GESTURE.TAP,         { previousTrack: true } ],
+  [ GESTURE.PRESS,       { noop: true } ]
+]);
+
+// action map for previous button in now-playing.
+const nextButtonActionMap = new Map([
+  // key & value pair array.
+  [ GESTURE.SWIPE_LEFT,  { focus: FOCUSABLE_ITEM.PLAY_BUTTON } ],
+  [ GESTURE.SWIPE_RIGHT, { noop: true } ],
+  [ GESTURE.SWIPE_UP,    { upFromNowPlaying: true } ],
+  [ GESTURE.SWIPE_DOWN,  { noop: true } ],
+  [ GESTURE.TAP,         { nextTrack: true } ],
   [ GESTURE.PRESS,       { noop: true } ]
 ]);
 
@@ -31,6 +78,12 @@ stateActionMap.set(FOCUSABLE_ITEM.MUSIC_LIBRARY, musicActionMap);
 stateActionMap.set(FOCUSABLE_ITEM.MOVIE_LIBRARY, movieActionMap);
 
 // action flow at music-library page.
+stateActionMap.set(FOCUSABLE_ITEM.TRACK_LIST, trackListActionMap);
+
+// action flow for now-playing.
+stateActionMap.set(FOCUSABLE_ITEM.PLAY_BUTTON, playButtonActionMap);
+stateActionMap.set(FOCUSABLE_ITEM.PREVIOUS_BUTTON, previousButtonActionMap);
+stateActionMap.set(FOCUSABLE_ITEM.NEXT_BUTTON, nextButtonActionMap);
 
 const getStateObj = function(currentFocusItem, gesture) {
   let actionMap = stateActionMap.get(currentFocusItem);
@@ -47,4 +100,6 @@ const getStateObj = function(currentFocusItem, gesture) {
   }
 }
 
-module.exports = getStateObj;
+module.exports = {
+  getStateObj: getStateObj
+}

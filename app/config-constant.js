@@ -10,11 +10,20 @@ const VIEW = {
 }
 
 const FOCUSABLE_ITEM = {
+  // home page
   MUSIC_LIBRARY: 'musicLibrary',
   MOVIE_LIBRARY: 'movieLibrary',
+
+  // now playing panel
   PLAY_BUTTON: 'playButton',
   PREVIOUS_BUTTON: 'previousButton',
-  NEXT_BUTTON: 'nextButton'
+  NEXT_BUTTON: 'nextButton',
+
+  // music library
+  TRACK_LIST: 'trackList',
+
+  // movie library
+  MOVIE_LIST: 'movieLibrary'
 }
 
 const GESTURE = {
@@ -47,7 +56,20 @@ const STR = {
 };
 
 const MUSIC = {
-  TRACK_PER_PAGE: 10
+  TRACK_PER_PAGE: 10,
+}
+
+const STATUS = {
+  FETCHING: 'fetching',
+  FETCH_COMPLETE: 'fetchComplete'
+}
+
+const DATABASE = {
+  TYPE: {
+    TRACK    : 'track',
+    ALBUM    : 'album',
+    ALBUM_ART: 'albumArt'
+  }
 }
 
 module.exports = {
@@ -57,6 +79,8 @@ module.exports = {
   GESTURE: GESTURE,
 
   MUSIC: MUSIC,
-  
+  STATUS: STATUS,
+  DATABASE: DATABASE,
+
   STR: STR
 }

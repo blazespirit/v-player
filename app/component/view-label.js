@@ -1,11 +1,11 @@
 const viewLabel = {
   template: `
     <div id="view-label" @click="toggleLocale">
-      {{ currentViewLabel }}
+      {{ viewLabel }}
     </div>
   `,
   computed: {
-    currentViewLabel: function() {
+    viewLabel: function() {
       return this.$store.getters.getViewLabel;
     }
   },

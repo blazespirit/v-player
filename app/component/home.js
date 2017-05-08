@@ -3,8 +3,8 @@ const CONFIG = require('../config-constant');
 const home = {
   template: `
     <div id="menu-item">
-      <div id="music" v-bind:class="{ active: musicFocus }" @click="goToMusicLibrary"></div>
-      <div id="movie" v-bind:class="{ active: movieFocus }" @click="goToMovieLibrary"></div>
+      <div id="music" v-bind:class="{ 'focus': musicFocus }" @click="goToMusicLibrary"></div>
+      <div id="movie" v-bind:class="{ 'focus': movieFocus }" @click="goToMovieLibrary"></div>
     </div>
   `,
   methods: {
@@ -19,18 +19,23 @@ const home = {
   },
   computed: {
     musicFocus: function() {
-      return this.$store.state.focused === CONFIG.FOCUSABLE_ITEM.MUSIC_LIBRARY;
+      return this.$store.state.focus === CONFIG.FOCUSABLE_ITEM.MUSIC_LIBRARY;
     },
     movieFocus: function() {
-      return this.$store.state.focused === CONFIG.FOCUSABLE_ITEM.MOVIE_LIBRARY;
+      return this.$store.state.focus === CONFIG.FOCUSABLE_ITEM.MOVIE_LIBRARY;
     },
     viewChange: function() {
-      return this.$store.state.currentView;
+      return this.$store.state.view; // TODO -- use getter function.
     }
   },
   watch: {
-    viewChange: function (view) {
-      console.log(view);
+    viewChange: function(view) {
+      if (view === CONFIG.VIEW.MUSIC) {
+        this.$router.push('music-library');
+      }
+      else if (view === CONFIG.VIEW.MOVIE) {
+        this.$router.push('movie-library');
+      }
     }
   },
 };

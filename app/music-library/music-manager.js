@@ -12,13 +12,16 @@ const tingoDB = require('tingodb')().Db;
 const mediaDB = new tingoDB('./app/music-library', {});
 const musicCollection = mediaDB.collection("music-collection.db");
 
+const { DATABASE } = require('../config-constant');
+
 const init = function() {
   musicCollection.findOne({}, function(err, item) {
     if (item === null) { // collection not exist. Perform full initialization.
-      // scanDirectory();
-
-      // callback hell start here
-      filewalker(PATH2, { matchRegExp: /\.(?:mp3)$/i })
+      // callback hell start here.
+      // 1. filewalker traverse the directory specified.
+      // 2. on 'file' event, extract metadata.
+      // 3. extracted metadata will be inserted to DB.
+      filewalker(PATH, { matchRegExp: /\.(?:mp3)$/i }) // TODO -- get PATH from user input.
         .on('file', function(relativePath, stats, fullPath) {
           let readableStream = fileSystem.createReadStream(fullPath);
           let trackObj = {};
@@ -28,17 +31,28 @@ const init = function() {
               throw err;
             }
 
+            // if no title metadata found, set file name as title. 
+            let title = metadata.title.trim();
+
+            if (title === '') {
+              title = fullPath.split('\\').pop().split('/').pop(); // get file name.
+              title = title.replace(/\.[^/.]+$/, "");              // remove .extension. 
+            }
+
             trackObj._id = shortID.generate();
-            trackObj.title = metadata.title;
+            trackObj.type = DATABASE.TYPE.TRACK;
+            trackObj.path = fullPath;
+            trackObj.title = title;
             trackObj.artist = metadata.artist;
             trackObj.album = metadata.album;
-            trackObj.albumArtist = metadata.albumartist;
-            trackObj.genre = metadata.genre;
-            trackObj.year = metadata.year;
-            trackObj.track = metadata.track;
-            trackObj.disk = metadata.disk;
-            trackObj.path = fullPath;
-            trackObj.type = 'track';
+
+            // ===== other optional fields =====
+
+            // trackObj.albumArtist = metadata.albumartist;
+            // trackObj.genre = metadata.genre;
+            // trackObj.year = metadata.year;
+            // trackObj.track = metadata.track;
+            // trackObj.disk = metadata.disk;
 
             readableStream.close();
 
@@ -61,23 +75,41 @@ const init = function() {
   });
 }
 
-const getTrack = function(trackNum, page, callback) {
+const getTrackList = function(trackNum, page, vuexStore) {
   if (page < 1) {
     page = 1;
   }
-
   musicCollection.find({ type: 'track' })
                  .skip((page - 1) * trackNum)
                  .limit(trackNum)
                  .toArray(function(err, record) {
-                    callback(record);
+                    vuexStore.commit('UPDATE_TRACK_LIST', { trackList: record });
+                 });
+}
+
+const getSingleTrack = function(index, vuexStore) {
+  if (index < 0) {
+    index = 0;
+  }
+  musicCollection.find({ type: 'track' })
+                 .skip(index)
+                 .limit(1)
+                 .toArray(function(err, record) {
+                    if (record[0] !== undefined) {
+                      vuexStore.commit('UPDATE_TRACK', record[0]);
+                    }
+                    else {
+                      vuexStore.commit('UPDATE_INDEX', 0);
+                      vuexStore.commit('GET_SINGLE_TRACK', vuexStore);
+                    }
                  });
 }
 
 const musicManager = {
   // methods
   init: init,
-  getTrack: getTrack
+  getTrackList: getTrackList,
+  getSingleTrack: getSingleTrack
 
 };
 

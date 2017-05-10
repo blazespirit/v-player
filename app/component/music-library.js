@@ -1,7 +1,5 @@
 const { FOCUSABLE_ITEM } = require('../config-constant');
 
-const test = require('../music-library/music-manager'); // TODO --remove
-
 const musicLibrary = {
   template: `
     <div id="music-library">
@@ -11,7 +9,7 @@ const musicLibrary = {
         <div class="blank-space"></div>
       </div>
       <div class="middle-box">
-        <div class="label" @click="test">Track List</div>
+        <div class="label">Track List</div>
         <div class="song-list">
           <div class="track" 
               v-bind:class="{ 'focus': isFocus && index === focusIndex }"
@@ -33,9 +31,6 @@ const musicLibrary = {
     },
     previousPage: function() {
       this.$store.commit('GET_TRACK_LIST_PREVIOUS_PAGE');
-    },
-    test: function() {
-      test.processAlbumGrouping(); // TODO --remove
     }
   },
   computed: {

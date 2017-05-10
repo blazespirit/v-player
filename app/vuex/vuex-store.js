@@ -43,7 +43,7 @@ const vuexStore = new Vuex.Store({
       isPlaying: false,
       fetchStatus: '',
       index: 0,
-      albumArt: null
+      albumArtBase64: ''
     },
 
     // state for loading-overlay component
@@ -161,8 +161,8 @@ const vuexStore = new Vuex.Store({
     UPDATE_IS_PLAYING: function(state, isPlaying) {
       state.nowPlaying.isPlaying = isPlaying;
     },
-    UPDATE_ALBUM_ART: function(state, albumArtBuffer) {
-      state.nowPlaying.albumArt = albumArtBuffer;
+    UPDATE_ALBUM_ART: function(state, albumArtBase64) {
+      state.nowPlaying.albumArtBase64 = albumArtBase64;
     },
     GET_SINGLE_TRACK: function(state) {
       _getTrack(state);
@@ -238,8 +238,8 @@ const vuexStore = new Vuex.Store({
     getAlbum:function(state) {
       return state.nowPlaying.album;
     },
-    getAlbumArt:function(state) {
-      return state.nowPlaying.albumArt;
+    getAlbumArtBase64:function(state) {
+      return state.nowPlaying.albumArtBase64;
     },
     isPlaying: function(state) {
       return state.nowPlaying.isPlaying;

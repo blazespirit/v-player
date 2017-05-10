@@ -141,13 +141,25 @@ html, body {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-#now-playing .album-art {
+#now-playing .album-art-container {
   width: 15vh;
   height: 15vh;
   background-color: rgba(0, 0, 0, 0.4);
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
+}
+
+#now-playing .album-art-container .album-art {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+#now-playing .album-art-container .no-album-art{
+  background-image: url();
 }
 
 #now-playing .track-info {
@@ -337,7 +349,7 @@ html, body {
   left: 0px;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 #loading-overlay .loading-container {
@@ -348,7 +360,7 @@ html, body {
 }
 
 #loading-overlay .loading-bar {
-  margin: 15px 0px 15px 0px;
+  margin: 20px 0px 15px 0px;
   width: 0px;
   height: 2px;
   background-color: white;

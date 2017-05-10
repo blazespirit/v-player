@@ -1,3 +1,5 @@
+// TODO -- consider parsing music metadata onload instead of store it to DB.
+
 const { BrowserWindow } = require('electron').remote;
 
 const Vue = require('vue');
@@ -56,4 +58,4 @@ require('./app/remote-control-server').startServer();
 // ===== music-library =====
 const musicMananger = require('./app/music-library/music-manager');
 
-musicMananger.init();
+musicMananger.init(vm.$store);

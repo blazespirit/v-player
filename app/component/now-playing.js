@@ -6,7 +6,13 @@ const { STATUS,
 const nowPlaying = {
   template: `
     <div id="now-playing">
-      <div class="album-art"></div>
+      <div class="album-art-container">
+        <div class="album-art"
+             v-if="albumArtBase64 !== ''"
+             v-bind:style="{ backgroundImage: 'url(data:;base64,' + albumArtBase64 + ')' }"></div>
+        <div v-else class="no-album-art">nope</div>
+
+      </div>
       <div class="track-info">
         <div class="track-title">{{ title }}</div>
         <div class="track-artist">{{ artist }}</div>
@@ -29,8 +35,7 @@ const nowPlaying = {
   `,
   data: function() {
     return {
-      track: null, // use as reference for Howler object.
-      albumArtDataUrl: ''
+      track: null // use as reference for Howler object.
     };
   },
   methods: {
@@ -57,8 +62,8 @@ const nowPlaying = {
     album: function() {
       return this.$store.getters.getAlbum;
     },
-    albumArt: function() {
-      return this.$store.getters.getAlbumArt;
+    albumArtBase64: function() {
+      return this.$store.getters.getAlbumArtBase64;
     },
     fetchStatus: function() {
       return this.$store.getters.getFetchStatus;
@@ -98,9 +103,6 @@ const nowPlaying = {
       else {
         this.track.pause();
       }
-    },
-    albumArt: function(albumArt) {
-      this.albumArtDataUrl = dataUrl;
     }
   },
   created: function() { // fetch 1st song info from DB and display it.

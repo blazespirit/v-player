@@ -15,9 +15,13 @@ const musicCollection = mediaDB.collection("music-collection.db");
 const { DATABASE,
         MUSIC } = require('../config-constant');
 
-const init = function() {
+const init = function(vuexStore) {
+  let totalRecord = null;
+  let insertedRecord = 0;
+
   musicCollection.findOne({}, function(err, item) {
     if (item === null) { // collection not exist. Perform full initialization.
+      vuexStore.commit('SHOW_LOADING');
       // callback hell start here.
       // 1. filewalker traverse the directory specified.
       // 2. on 'file' event, extract metadata.
@@ -25,7 +29,7 @@ const init = function() {
       filewalker(PATH, { matchRegExp: /\.(?:mp3)$/i }) // TODO -- get PATH from user input.
         .on('file', function(relativePath, stats, fullPath) {
           let readableStream = fileSystem.createReadStream(fullPath);
-          let trackObj = {};
+          let trackObj = { };
 
           musicMetadata(readableStream, function(err, metadata) {
             if (err) {
@@ -47,19 +51,6 @@ const init = function() {
             trackObj.artist = metadata.artist;
             trackObj.album = metadata.album;
 
-            // check if album art available.
-            // if yes, extract it as base64 data URL and insert to DB.
-            if (metadata.picture.length > 0) {
-              let albumArtBuffer = metadata.picture[0].data;
-              let base64String = '';
-
-              for (let i = 0; i < albumArtBuffer.length; i++) {
-                  base64String += String.fromCharCode(albumArtBuffer[i]);
-              }
-              let dataUrl = 'data:' + metadata.picture[0].format + ';base64,' + window.btoa(base64String);
-              trackObj.albumArtDataUrl = dataUrl;
-            }
-
             // ===== other optional fields =====
 
             // trackObj.albumArtist = metadata.albumartist;
@@ -71,7 +62,13 @@ const init = function() {
             readableStream.close();
 
             // insert to DB.
-            musicCollection.insert(trackObj);
+            musicCollection.insert(trackObj, function(err, record){
+              insertedRecord++;
+              
+              if (insertedRecord === totalRecord) {
+                _processAlbumGrouping();
+              }
+            });
           })
         })
         .on('error', function(err) {
@@ -80,6 +77,7 @@ const init = function() {
         .on('done', function() {
           console.log('DONE !!!');
           console.log('%d dirs, %d files, %d bytes', this.dirs, this.files, this.bytes);
+          totalRecord = this.files;
         })
       .walk();
 
@@ -111,6 +109,13 @@ const getSingleTrack = function(index, vuexStore) {
                  .toArray(function(err, record) {
                     if (record[0] !== undefined) {
                       vuexStore.commit('UPDATE_TRACK', record[0]);
+
+                      if (record[0].albumId) {
+                        getAlbumArt(record[0].albumId, vuexStore);
+                      }
+                      else {
+                        vuexStore.commit('UPDATE_ALBUM_ART', '');
+                      } 
                     }
                     else {
                       vuexStore.commit('UPDATE_INDEX', 0);
@@ -119,7 +124,7 @@ const getSingleTrack = function(index, vuexStore) {
                  });
 };
 
-const getSingleTrackAndPlay = function(index, vuexStore) {
+const getSingleTrackAndPlay = function(index, vuexStore) { // TODO -- consider merge with 'getSingleTrack'.
   if (index < 0) {
     index = 0;
   }
@@ -129,6 +134,13 @@ const getSingleTrackAndPlay = function(index, vuexStore) {
                  .toArray(function(err, record) {
                     if (record[0] !== undefined) {
                       vuexStore.commit('UPDATE_TRACK', record[0]);
+
+                      if (record[0].albumId) {
+                        getAlbumArt(record[0].albumId, vuexStore);
+                      }
+                      else {
+                        vuexStore.commit('UPDATE_ALBUM_ART', '');
+                      } 
                     }
                     else {
                       vuexStore.commit('UPDATE_INDEX', 0);
@@ -138,9 +150,15 @@ const getSingleTrackAndPlay = function(index, vuexStore) {
                  });
 };
 
+const getAlbumArt = function(albumId, vuexStore) { // TODO -- consider refactor.
+  musicCollection.findOne({ type: 'album', _id: albumId }, function(err, result) {
+    vuexStore.commit('UPDATE_ALBUM_ART', result.albumArtBase64);
+  });
+};
+
 const getTotalTrackNumber = function() {
   musicCollection.count({ type: 'track' }, function(err, count) {
-    console.log(count);
+    // console.log(count); // TODO -- remove if not used.
   });
 };
 
@@ -153,9 +171,78 @@ const updatePagination = function(vuexStore) {
 
 // this function perform album grouping.
 // it create records which contain the album art and it's track.
-const processAlbumGrouping = function() {
+const _processAlbumGrouping = function() {
+  let totalAlbum = null;
+  let processedAlbum = 0;
+  // search and group the track with 'album' metadata.
+  // track without 'album' metadata will be ignore.
   musicCollection.group(['album'], {'album': { $ne: '' }}, { }, function (obj, prev) {}, true, function(err, results) {
-    console.log(results);
+    if (err) {
+      throw err;
+    }
+
+    totalAlbum = results.length;
+
+    for (let i = 0; i < results.length; i++) {
+      let albumObj = {
+        _id: shortID.generate(),
+        title: results[i].album,
+        trackIdList: [],
+        albumArtBase64: '',
+        type: 'album'
+      };
+
+      musicCollection.find({ type: 'track', album: albumObj.title })
+                     .toArray(function(err, recordList) {
+                        if (err) {
+                          throw err;
+                        }
+                        // update album art
+                        let filePath = recordList[0].path;
+
+                        if (fileSystem.existsSync(filePath)) {
+                          let readStream = fileSystem.createReadStream(filePath);
+
+                          musicMetadata(readStream, function(err, metadata) {
+                            if (err) {
+                              readStream.close();
+                              throw err;
+                            }
+                            // check if album art available.
+                            // if yes, extract it as base64 data URL and insert to DB.
+                            if (metadata.picture.length > 0) {
+                              let albumArtBuffer = metadata.picture[0].data;
+                              let base64String = '';
+
+                              for (let i = 0; i < albumArtBuffer.length; i++) {
+                                  base64String += String.fromCharCode(albumArtBuffer[i]);
+                              }
+                              let Base64Image = window.btoa(base64String);
+                              albumObj.albumArtBase64 = Base64Image;
+                            }
+                            readStream.close(); // close stream to prevent leak.
+                          });
+                        }
+
+                        // add tracks ID to albumObj.
+                        for (let j = 0; j < recordList.length; j++) {
+                          albumObj.trackIdList.push(recordList[j]._id);
+
+                          // update track record with albumObj ID.
+                          musicCollection.update({ _id: recordList[j]._id },
+                                                 { $set: 
+                                                    { albumId: albumObj._id }
+                                                 });
+                        }
+                        // insert albumObj to DB.
+                        musicCollection.insert(albumObj, function(err, record) {});
+                          processedAlbum++;
+
+                          if (processedAlbum === totalAlbum) {
+                            vuexStore.commit('HIDE_LOADING');
+                          }
+                     });
+    }
   });
 };
 
@@ -165,9 +252,9 @@ const musicManager = {
   getTrackList: getTrackList,
   getSingleTrack: getSingleTrack,
   getSingleTrackAndPlay: getSingleTrackAndPlay,
+  getAlbumArt: getAlbumArt,
   getTotalTrackNumber: getTotalTrackNumber,
-  updatePagination: updatePagination,
-  processAlbumGrouping: processAlbumGrouping
+  updatePagination: updatePagination
 
 };
 

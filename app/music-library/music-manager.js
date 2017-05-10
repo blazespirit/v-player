@@ -12,7 +12,8 @@ const tingoDB = require('tingodb')().Db;
 const mediaDB = new tingoDB('./app/music-library', {});
 const musicCollection = mediaDB.collection("music-collection.db");
 
-const { DATABASE } = require('../config-constant');
+const { DATABASE,
+        MUSIC } = require('../config-constant');
 
 const init = function() {
   musicCollection.findOne({}, function(err, item) {
@@ -46,6 +47,19 @@ const init = function() {
             trackObj.artist = metadata.artist;
             trackObj.album = metadata.album;
 
+            // check if album art available.
+            // if yes, extract it as base64 data URL and insert to DB.
+            if (metadata.picture.length > 0) {
+              let albumArtBuffer = metadata.picture[0].data;
+              let base64String = '';
+
+              for (let i = 0; i < albumArtBuffer.length; i++) {
+                  base64String += String.fromCharCode(albumArtBuffer[i]);
+              }
+              let dataUrl = 'data:' + metadata.picture[0].format + ';base64,' + window.btoa(base64String);
+              trackObj.albumArtDataUrl = dataUrl;
+            }
+
             // ===== other optional fields =====
 
             // trackObj.albumArtist = metadata.albumartist;
@@ -73,7 +87,7 @@ const init = function() {
 
     }
   });
-}
+};
 
 const getTrackList = function(trackNum, page, vuexStore) {
   if (page < 1) {
@@ -85,7 +99,7 @@ const getTrackList = function(trackNum, page, vuexStore) {
                  .toArray(function(err, record) {
                     vuexStore.commit('UPDATE_TRACK_LIST', { trackList: record });
                  });
-}
+};
 
 const getSingleTrack = function(index, vuexStore) {
   if (index < 0) {
@@ -103,13 +117,57 @@ const getSingleTrack = function(index, vuexStore) {
                       vuexStore.commit('GET_SINGLE_TRACK', vuexStore);
                     }
                  });
-}
+};
+
+const getSingleTrackAndPlay = function(index, vuexStore) {
+  if (index < 0) {
+    index = 0;
+  }
+  musicCollection.find({ type: 'track' })
+                 .skip(index)
+                 .limit(1)
+                 .toArray(function(err, record) {
+                    if (record[0] !== undefined) {
+                      vuexStore.commit('UPDATE_TRACK', record[0]);
+                    }
+                    else {
+                      vuexStore.commit('UPDATE_INDEX', 0);
+                      vuexStore.commit('GET_SINGLE_TRACK', vuexStore);
+                    }
+                    vuexStore.commit('UPDATE_IS_PLAYING', true);
+                 });
+};
+
+const getTotalTrackNumber = function() {
+  musicCollection.count({ type: 'track' }, function(err, count) {
+    console.log(count);
+  });
+};
+
+const updatePagination = function(vuexStore) {
+  musicCollection.count({ type: 'track' }, function(err, count) {
+    let totalPage = Math.ceil(count / MUSIC.TRACK_PER_PAGE);
+    vuexStore.commit('UPDATE_PAGINATION', totalPage);
+  });
+};
+
+// this function perform album grouping.
+// it create records which contain the album art and it's track.
+const processAlbumGrouping = function() {
+  musicCollection.group(['album'], {'album': { $ne: '' }}, { }, function (obj, prev) {}, true, function(err, results) {
+    console.log(results);
+  });
+};
 
 const musicManager = {
   // methods
   init: init,
   getTrackList: getTrackList,
-  getSingleTrack: getSingleTrack
+  getSingleTrack: getSingleTrack,
+  getSingleTrackAndPlay: getSingleTrackAndPlay,
+  getTotalTrackNumber: getTotalTrackNumber,
+  updatePagination: updatePagination,
+  processAlbumGrouping: processAlbumGrouping
 
 };
 

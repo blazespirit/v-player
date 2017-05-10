@@ -11,7 +11,7 @@ const musicActionMap = new Map([
   [ GESTURE.SWIPE_LEFT,  { noop: true } ], // no operation.
   [ GESTURE.SWIPE_RIGHT, { focus: FOCUSABLE_ITEM.MOVIE_LIBRARY }],
   [ GESTURE.SWIPE_UP,    { noop: true } ],
-  [ GESTURE.SWIPE_DOWN,  { noop: true } ],
+  [ GESTURE.SWIPE_DOWN,  { focus: FOCUSABLE_ITEM.PLAY_BUTTON } ],
   [ GESTURE.TAP,         { view: VIEW.MUSIC, 
                            focus: FOCUSABLE_ITEM.TRACK_LIST,
                            focusIndex: 1 } ],
@@ -21,11 +21,11 @@ const musicActionMap = new Map([
 // action map for track list in music-library
 const trackListActionMap = new Map([
   // key & value pair array.
-  [ GESTURE.SWIPE_LEFT,  { noop: true } ], // no operation.
-  [ GESTURE.SWIPE_RIGHT, { noop: true } ],
+  [ GESTURE.SWIPE_LEFT,  { trackListPreviousPage: true } ], // no operation.
+  [ GESTURE.SWIPE_RIGHT, { trackListNextPage: true } ],
   [ GESTURE.SWIPE_UP,    { focusIndexMinus: 1 } ],
   [ GESTURE.SWIPE_DOWN,  { focusIndexPlus: 1 } ],
-  [ GESTURE.TAP,         { noop: true } ],
+  [ GESTURE.TAP,         { playSelectedTrack: true } ],
   [ GESTURE.PRESS,       { noop: true } ]
 ]);
 
@@ -35,7 +35,7 @@ const movieActionMap = new Map([
   [ GESTURE.SWIPE_LEFT,  { focus: FOCUSABLE_ITEM.MUSIC_LIBRARY } ],
   [ GESTURE.SWIPE_RIGHT, { noop: true } ], // no operation.
   [ GESTURE.SWIPE_UP,    { noop: true } ],
-  [ GESTURE.SWIPE_DOWN,  { noop: true } ],
+  [ GESTURE.SWIPE_DOWN,  { focus: FOCUSABLE_ITEM.PLAY_BUTTON } ],
   [ GESTURE.TAP,         { view: VIEW.MOVIE } ],
   [ GESTURE.PRESS,       { noop: true } ]
 ]);

@@ -29,7 +29,8 @@ const nowPlaying = {
   `,
   data: function() {
     return {
-      track: null // use as reference for Howler object.
+      track: null, // use as reference for Howler object.
+      albumArtDataUrl: ''
     };
   },
   methods: {
@@ -37,12 +38,10 @@ const nowPlaying = {
       this.$store.commit('TOGGLE_PLAY_PAUSE');
     },
     nextTrack: function() {
-      this.$store.commit('INCREASE_INDEX');
-      this.$store.commit('GET_SINGLE_TRACK');
+      this.$store.commit('NEXT_TRACK');
     },
     previousTrack:function() {
-      this.$store.commit('DECREASE_INDEX');
-      this.$store.commit('GET_SINGLE_TRACK');
+      this.$store.commit('PREVIOUS_TRACK');
     }
   },
   computed: {
@@ -57,6 +56,9 @@ const nowPlaying = {
     },
     album: function() {
       return this.$store.getters.getAlbum;
+    },
+    albumArt: function() {
+      return this.$store.getters.getAlbumArt;
     },
     fetchStatus: function() {
       return this.$store.getters.getFetchStatus;
@@ -96,6 +98,9 @@ const nowPlaying = {
       else {
         this.track.pause();
       }
+    },
+    albumArt: function(albumArt) {
+      this.albumArtDataUrl = dataUrl;
     }
   },
   created: function() { // fetch 1st song info from DB and display it.
@@ -104,28 +109,3 @@ const nowPlaying = {
 };
 
 module.exports = nowPlaying;
-
-// === test howler.js ===
-
-// console.log(howler);
-
-// var soundMix = new Howl({
-//   src: [sound2, sound1],
-//   html5: true,
-//   onload: function() {
-//     console.log(soundMix.duration());
-//   },
-//   onend: function() {
-//     console.log('its end');
-//   }
-// });
-
-// var soundOne = new Howl({
-//   src: [sound1],
-//   html5: true
-// });
-
-// var soundTwo = new Howl({
-//   src: [sound2],
-//   html5: true
-// });

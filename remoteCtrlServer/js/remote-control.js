@@ -6,6 +6,9 @@ const socket = io();
 
 gesture.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 
+// set press trigger duration to 500ms.
+gesture.get('press').set({ time: 500 });
+
 // disable unused gestures.
 gesture.get('pan').set({ enable: false });
 gesture.get('pinch').set({ enable: false });

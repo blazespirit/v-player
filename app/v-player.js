@@ -3,6 +3,7 @@ const { BrowserWindow } = require('electron').remote;
 const Vue = require('vue');
 const vuexStore = require('./app/vuex/vuex-store'); // path relative to entry file 'index.html'.
 const vueRouter = require('./app/vue-router/router');
+const loadingOverlay = require('./app/component/loading-overlay');
 const viewLabel = require('./app/component/view-label');
 const clock = require('./app/component/clock');
 const home = require('./app/component/home');
@@ -31,6 +32,7 @@ let vm = new Vue({
       <div id="bottom-panel">
         <now-playing></now-playing>
       </div>
+      <loading-overlay></loading-overlay>
     </div>
   `,
   data: {
@@ -38,6 +40,7 @@ let vm = new Vue({
     str2: 'music library'
   },
   components: {
+    'loading-overlay': loadingOverlay,
     'view-label': viewLabel,
     'clock': clock,
     'home': home,

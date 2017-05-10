@@ -1,5 +1,9 @@
 :root {
-  font-family: Roboto, Helvetica, sans-serif;
+  font-family: Roboto,
+               msjh,
+               Gulim,
+               Helvetica,
+               sans-serif;
   font-size: 5vh;
   color: white;
   user-select: none;
@@ -24,6 +28,20 @@
   font-weight: 500;
   font-style: normal;
   src: url('./assets/font/Roboto-Medium.ttf');
+}
+
+/* font for chinese & japanese*/
+@font-face {
+  font-family: msjh;
+  font-style: normal;
+  src: url('./assets/font/msjh.ttf');
+}
+
+/* font for korean */
+@font-face {
+  font-family: Gulim;
+  font-style: normal;
+  src: url('./assets/font/Gulim.ttf');
 }
 
 html, body {
@@ -99,7 +117,7 @@ html, body {
 }
 
 #music.focus {
-  border: 2px solid #ffeb3b;
+  border: 2px solid white;
 }
 
 /* movie menu component */
@@ -114,7 +132,7 @@ html, body {
 }
 
 #movie.focus {
-  border: 2px solid #ffeb3b;
+  border: 2px solid white;
 }
 
 /* now-playing component */
@@ -126,6 +144,10 @@ html, body {
 #now-playing .album-art {
   width: 15vh;
   height: 15vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 #now-playing .track-info {
@@ -208,9 +230,53 @@ html, body {
 
 /* music-library component */
 #music-library {
-  width: 60vw;
-  margin: auto;
+  display: flex;
   font-weight: 300;
+}
+
+#music-library .left-box,
+#music-library .right-box {
+  width: 20vw;
+}
+
+#music-library .left-box .previous-page-icon,
+#music-library .right-box .next-page-icon {
+  height: 65vh;
+}
+
+#music-library .left-box .previous-page-icon {
+  background-image: url('./assets/icon/previous-page-120.png');
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+#music-library .left-box .previous-page-icon.hide {
+  background-image: none;
+}
+
+#music-library .right-box .next-page-icon {
+  background-image: url('./assets/icon/next-page-120.png');
+  background-position: left;
+  background-repeat: no-repeat;
+}
+
+#music-library .right-box .next-page-icon.hide {
+  background-image: none;
+}
+
+#music-library .left-box .blank-space,
+#music-library .right-box .track-page {
+  height: 10vh;
+}
+
+#music-library .right-box .track-page {
+  font-weight: 100;
+  line-height: 10vh;
+  text-align: center;
+}
+
+#music-library .middle-box {
+  width: 60vw;
   background-color: rgba(255, 255, 255, 0.15);
 }
 
@@ -263,3 +329,49 @@ html, body {
   margin: auto;
   font-weight: 300;
 }
+
+/* loading-overlay component */
+#loading-overlay {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#loading-overlay .loading-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#loading-overlay .loading-bar {
+  margin: 15px 0px 15px 0px;
+  width: 0px;
+  height: 2px;
+  background-color: white;
+  box-shadow: 0 0 10px white;
+  transition: width 0.5s;
+  animation: loading 1s ease-out infinite;
+}
+
+#loading-overlay .loading-text {
+  font-size: 1rem;
+  font-weight: 100;
+  text-align: center;
+  width: 50vw;
+}
+
+@keyframes loading {
+  0% {
+    width: 0px;
+  }
+
+  100% {
+    opacity: 0;
+    width: 50vw;
+  }
+}
+

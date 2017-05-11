@@ -10,8 +10,7 @@ const nowPlaying = {
         <div class="album-art"
              v-if="albumArtBase64 !== ''"
              v-bind:style="{ backgroundImage: 'url(data:;base64,' + albumArtBase64 + ')' }"></div>
-        <div v-else class="no-album-art">nope</div>
-
+        <div v-else class="no-album-art"></div>
       </div>
       <div class="track-info">
         <div class="track-title">{{ title }}</div>

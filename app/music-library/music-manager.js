@@ -235,12 +235,13 @@ const _processAlbumGrouping = function() {
                                                  });
                         }
                         // insert albumObj to DB.
-                        musicCollection.insert(albumObj, function(err, record) {});
+                        musicCollection.insert(albumObj, function(err, record) {
                           processedAlbum++;
 
                           if (processedAlbum === totalAlbum) {
                             vuexStore.commit('HIDE_LOADING');
                           }
+                        });
                      });
     }
   });

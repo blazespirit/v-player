@@ -56,7 +56,7 @@ html, body {
   width: 100%;
   height: 100%;
   margin: 0px;
-  background-image: url('./assets/img/wallpaper.png');
+  background-image: url('./assets/img/black_prism.png');
   background-size: cover;
   background-clip: border-box;
   background-repeat: no-repeat;
@@ -67,7 +67,7 @@ html, body {
   display: flex;
   justify-content: space-between;
   font-weight: 100;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 /* view-label component */
@@ -102,38 +102,81 @@ html, body {
 #menu-item {
   display: flex;
   justify-content: space-around;
-  padding: 100px 0px 0px 0px;
+  padding: 100px 300px 0px 300px;
 }
 
 /* music menu component */
 #music {
-  background-image: url('./assets/icon/music-96-white.png');
+  background-image: url('./assets/icon/music-library.png');
+  background-size: 200px 200px;
   background-repeat: no-repeat;
   background-position: center;
-  width: 196px;
-  height:196px;
-  padding: 50px;
+  width: 300px;
+  height: 300px;
   box-sizing: border-box;
-}
-
-#music.focus {
-  border: 2px solid white;
 }
 
 /* movie menu component */
 #movie {
-  background-image: url('./assets/icon/movie-96-white.png');
+  background-image: url('./assets/icon/movie-library.png');
+  background-size: 200px 200px;
   background-repeat: no-repeat;
   background-position: center;
-  width: 196px;
-  height: 196px;
-  padding: 50px;
+  width: 300px;
+  height: 300px;
   box-sizing: border-box;
 }
 
+/* ====== focus animation START ===== */
+#music.focus,
 #movie.focus {
-  border: 2px solid white;
+  position: relative;
+  z-index: 0;
 }
+
+#music.focus:before,
+#movie.focus:before,
+#music.focus:after,
+#movie.focus:after {
+  opacity: 0;
+  box-sizing: border-box;
+  content: "\0020";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0px;
+  border: 5px solid #fff;
+  box-shadow: 0 0 50px #fff, inset 0 0 50px #fff;
+}
+
+#music.focus:after,
+#movie.focus:after {
+  z-index: 1;
+  animation: wave 0.9s infinite 0.45s;
+}
+
+#music.focus:before,
+#movie.focus:before {
+  z-index: 2;
+  animation: wave 0.9s infinite;
+}
+
+@keyframes wave {
+  0% {
+    transform: scale(0.75);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+/* ====== focus animation END ===== */
 
 /* now-playing component */
 #now-playing {
@@ -208,42 +251,111 @@ html, body {
 }
 
 #now-playing .track-control {
-  width: calc((100vw - 15vh) * 0.3);
+  width: 45vh;
   display: flex;
 }
 
 #now-playing .track-control .previous-track {
-  width: 33%;
+  width: 15vh;
   background-image: url('./assets/icon/previous-110-white.png');
   background-position: center;
   background-repeat: no-repeat;
 }
 
+#now-playing .track-control .previous-track.focus {
+  background-image: url('./assets/icon/previous-110-white-focus.png');
+}
+
 #now-playing .track-control .play-pause {
-  width: 33%;
+  width: 15vh;
   background-image: url('./assets/icon/play-110-white.png');
   background-position: center;
   background-repeat: no-repeat;
+}
+
+#now-playing .track-control .play-pause.focus {
+  background-image: url('./assets/icon/play-110-white-focus.png');
 }
 
 #now-playing .track-control .play-pause.is-playing {
   background-image: url('./assets/icon/pause-110-white.png');
 }
 
+#now-playing .track-control .play-pause.is-playing.focus {
+  background-image: url('./assets/icon/pause-110-white-focus.png');
+}
+
 #now-playing .track-control .next-track {
-  width: 33%;
+  width: 15vh;
   background-image: url('./assets/icon/next-110-white.png');
   background-position: center;
   background-repeat: no-repeat;
 }
 
+#now-playing .track-control .next-track.focus {
+  background-image: url('./assets/icon/next-110-white-focus.png');
+}
+
+/* ====== focus animation START ===== */
 #now-playing .track-control .previous-track.focus,
 #now-playing .track-control .play-pause.focus,
 #now-playing .track-control .play-pause.is-playing.focus,
 #now-playing .track-control .next-track.focus {
-  box-sizing: border-box;
-  border: 2px solid white;
+  position: relative;
+  z-index: 0;
 }
+
+#now-playing .track-control .previous-track.focus:before,
+#now-playing .track-control .play-pause.focus:before,
+#now-playing .track-control .play-pause.is-playing.focus:before,
+#now-playing .track-control .next-track.focus:before,
+#now-playing .track-control .previous-track.focus:after,
+#now-playing .track-control .play-pause.focus:after,
+#now-playing .track-control .play-pause.is-playing.focus:after,
+#now-playing .track-control .next-track.focus:after {
+  opacity: 0;
+  box-sizing: border-box;
+  content: "\0020";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 100px;
+  border: 5px solid #fff;
+  box-shadow: 0 0 50px #fff, inset 0 0 50px #fff;
+}
+
+#now-playing .track-control .previous-track.focus:after,
+#now-playing .track-control .play-pause.focus:after,
+#now-playing .track-control .play-pause.is-playing.focus:after,
+#now-playing .track-control .next-track.focus:after {
+  z-index: 1;
+  animation: ripple 1.5s infinite 0.7s;
+}
+
+#now-playing .track-control .previous-track.focus:before,
+#now-playing .track-control .play-pause.focus:before,
+#now-playing .track-control .play-pause.is-playing.focus:before,
+#now-playing .track-control .next-track.focus:before {
+  z-index: 2;
+  animation: ripple 1.5s infinite;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+/* ====== focus animation END ===== */
 
 /* music-library component */
 #music-library {
@@ -294,7 +406,7 @@ html, body {
 
 #music-library .middle-box {
   width: 60vw;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 #music-library .category {
@@ -391,4 +503,3 @@ html, body {
     width: 50vw;
   }
 }
-

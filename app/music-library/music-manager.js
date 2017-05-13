@@ -2,7 +2,7 @@ const PATH = 'C:\\Users\\blaze_spirit\\Desktop\\testing-groud\\music-library-2';
 const PATH2 = 'E:\\My_Music';
 
 //==================================
-
+const drivelist = require('drivelist');
 const filewalker = require('filewalker');
 const fileSystem = require('fs');
 const musicMetadata = require('musicmetadata');
@@ -16,6 +16,27 @@ const { DATABASE,
         MUSIC } = require('../config-constant');
 
 const init = function(vuexStore) {
+  let extDrivePath = [];
+
+  drivelist.list((error, drivesList) => {
+    if (error) {
+      throw error;
+    }
+    console.log(drivesList);
+    for (let i = 0; i < drivesList.length; i++) {
+      if (drivesList[i].system === false) { // get storage drive which are not system. (external drives)
+        let mountPointList = drivesList[i].mountpoints;
+
+        for (let j = 0; j < mountPointList.length; j++) {
+          extDrivePath.push(mountPointList[j].path);
+        }
+      }
+    }
+    console.log(extDrivePath);
+  });
+}
+
+const _init = function(vuexStore) {
   let totalRecord = null;
   let insertedRecord = 0;
 
@@ -26,7 +47,7 @@ const init = function(vuexStore) {
       // 1. filewalker traverse the directory specified.
       // 2. on 'file' event, extract metadata.
       // 3. extracted metadata will be inserted to DB.
-      filewalker(PATH, { matchRegExp: /\.(?:mp3)$/i }) // TODO -- get PATH from user input.
+      filewalker(PATH2, { matchRegExp: /\.(?:mp3)$/i }) // TODO -- get PATH from user input.
         .on('file', function(relativePath, stats, fullPath) {
           let readableStream = fileSystem.createReadStream(fullPath);
           let trackObj = { };

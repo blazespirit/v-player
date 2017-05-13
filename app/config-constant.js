@@ -72,6 +72,13 @@ const DATABASE = {
   }
 }
 
+const REMOTE_CTRL_SERVER = {
+  IP_ADDRESS: '192.168.1.25',
+  PORT: 3000,
+  IPV4_STR: 'IPv4',
+  WLAN_NAME: 'wlan0'
+}
+
 module.exports = {
   LANGUAGE: LANGUAGE,
   VIEW: VIEW,
@@ -82,5 +89,8 @@ module.exports = {
   STATUS: STATUS,
   DATABASE: DATABASE,
 
-  STR: STR
+  STR: STR,
+
+  REMOTE_CTRL_SERVER: REMOTE_CTRL_SERVER
+
 }

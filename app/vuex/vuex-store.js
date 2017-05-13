@@ -129,6 +129,11 @@ const vuexStore = new Vuex.Store({
     // to update the state of tracklist after fetch from DB.
     UPDATE_TRACK_LIST: function(state, trackObj) {
       state.musicLibrary.trackList = trackObj.trackList;
+
+      // if returned track list < focus index, update focus index.
+      if (state.musicLibrary.focusIndex > trackObj.trackList.length - 1) {
+        state.musicLibrary.focusIndex = trackObj.trackList.length - 1;
+      }
     },
     GET_TRACK_LIST: function(state) {
       musicManager.getTrackList(MUSIC.TRACK_PER_PAGE, state.musicLibrary.trackListCurrentPage, vuexStore);

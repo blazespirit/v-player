@@ -37,7 +37,7 @@ const home = {
         this.$router.push('movie-library');
       }
     }
-  },
+  }
 };
 
 module.exports = home;

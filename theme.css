@@ -147,20 +147,20 @@ html, body {
   width: 100%;
   height: 100%;
   border-radius: 0px;
-  border: 5px solid #fff;
+  border: 1px solid #fff;
   box-shadow: 0 0 50px #fff, inset 0 0 50px #fff;
 }
 
 #music.focus:after,
 #movie.focus:after {
   z-index: 1;
-  animation: wave 0.9s infinite 0.45s;
+  animation: wave 1.5s infinite 0.75s;
 }
 
 #music.focus:before,
 #movie.focus:before {
   z-index: 2;
-  animation: wave 0.9s infinite;
+  animation: wave 1.5s infinite;
 }
 
 @keyframes wave {
@@ -322,36 +322,58 @@ html, body {
   width: 100%;
   height: 100%;
   border-radius: 100px;
-  border: 5px solid #fff;
+  border: 2px solid #fff;
   box-shadow: 0 0 50px #fff, inset 0 0 50px #fff;
 }
 
-#now-playing .track-control .previous-track.focus:after,
 #now-playing .track-control .play-pause.focus:after,
-#now-playing .track-control .play-pause.is-playing.focus:after,
+#now-playing .track-control .play-pause.is-playing.focus:after {
+  z-index: 1;
+  animation: ripple-large 1.5s infinite 0.7s;
+}
+
+#now-playing .track-control .play-pause.focus:before,
+#now-playing .track-control .play-pause.is-playing.focus:before {
+  z-index: 2;
+  animation: ripple-large 1.5s infinite;
+}
+
+#now-playing .track-control .previous-track.focus:after,
 #now-playing .track-control .next-track.focus:after {
   z-index: 1;
-  animation: ripple 1.5s infinite 0.7s;
+  animation: ripple-small 1.5s infinite 0.75s;
 }
 
 #now-playing .track-control .previous-track.focus:before,
-#now-playing .track-control .play-pause.focus:before,
-#now-playing .track-control .play-pause.is-playing.focus:before,
 #now-playing .track-control .next-track.focus:before {
   z-index: 2;
-  animation: ripple 1.5s infinite;
+  animation: ripple-small 1.5s infinite;
 }
 
-@keyframes ripple {
+@keyframes ripple-large {
   0% {
-    transform: scale(0);
+    transform: scale(0.65);
     opacity: 0;
   }
   50% {
     opacity: 1;
   }
   100% {
-    transform: scale(1);
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}
+
+@keyframes ripple-small {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.7);
     opacity: 0;
   }
 }

@@ -215,6 +215,9 @@ const vuexStore = new Vuex.Store({
     getFocus: function(state) {
       return state.focus;
     },
+    getView: function(state) {
+      return state.view;
+    },
     // ========== music-library getter ==========
     getFocusIndex: function(state) {
       let index = state.musicLibrary.focusIndex;

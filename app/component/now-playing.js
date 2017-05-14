@@ -1,5 +1,6 @@
 const fileSystem = require('fs');
 const howler = require('howler');
+const musicMetadata = require('musicmetadata');
 const { STATUS,
         FOCUSABLE_ITEM } = require('../config-constant');
 
@@ -62,7 +63,35 @@ const nowPlaying = {
       return this.$store.getters.getAlbum;
     },
     albumArtBase64: function() {
-      return this.$store.getters.getAlbumArtBase64;
+      let albumArt = '';
+
+      // if returned Base64 image is empty, try to parse the file to get the album art image.
+      if (this.$store.getters.getAlbumArtBase64 === '') {
+        if (fileSystem.existsSync(this.path)) {
+          let readStream = fileSystem.createReadStream(this.path);
+
+          musicMetadata(readStream, (err, metadata) => {
+            if (err) {
+              readStream.close();
+              throw err;
+            }
+            if (metadata.picture.length > 0) {
+              let albumArtBuffer = metadata.picture[0].data;
+              let base64String = '';
+
+              for (let i = 0; i < albumArtBuffer.length; i++) {
+                  base64String += String.fromCharCode(albumArtBuffer[i]);
+              }
+              this.$store.commit('UPDATE_ALBUM_ART', window.btoa(base64String));
+            }
+            readStream.close(); // close stream to prevent leak.
+          });
+        }
+      }
+      else {
+        albumArt = this.$store.getters.getAlbumArtBase64;
+      }
+      return albumArt;
     },
     fetchStatus: function() {
       return this.$store.getters.getFetchStatus;

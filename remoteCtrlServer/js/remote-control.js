@@ -8,10 +8,10 @@ gesture.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 
 // set press trigger duration to 500ms.
 gesture.get('press').set({ time: 500 });
+gesture.get('pinch').set({ enable: true });
 
 // disable unused gestures.
 gesture.get('pan').set({ enable: false });
-gesture.get('pinch').set({ enable: false });
 gesture.get('rotate').set({ enable: false });
 
 // TODO -- define the config in remote control webapp too.
@@ -44,3 +44,14 @@ gesture.on('press', (ev) => {
   divEl.textContent = "press";
   socket.emit('action', 'press');
 });
+
+gesture.on('pinchin', (ev) => {
+  divEl.textContent = "pinchin";
+  socket.emit('action', 'pinchIn');
+});
+
+gesture.on('pinchout', (ev) => {
+  divEl.textContent = "pinchout";
+  socket.emit('action', 'pinchOut');
+});
+

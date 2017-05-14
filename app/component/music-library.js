@@ -1,4 +1,4 @@
-const { FOCUSABLE_ITEM } = require('../config-constant');
+const { VIEW, FOCUSABLE_ITEM } = require('../config-constant');
 
 const musicLibrary = {
   template: `
@@ -54,6 +54,16 @@ const musicLibrary = {
     },
     isLastPage: function() {
       return (this.$store.getters.getTrackListCurrentPage === this.$store.getters.getTrackListTotalPage);
+    },
+    viewChange: function() {
+      return this.$store.getters.getView;
+    }
+  },
+  watch: {
+    viewChange: function(view) {
+      if (view === VIEW.HOME) {
+        this.$router.push('home');
+      }
     }
   },
   created: function() {

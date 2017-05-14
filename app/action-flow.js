@@ -15,7 +15,9 @@ const musicActionMap = new Map([
   [ GESTURE.TAP,         { view: VIEW.MUSIC, 
                            focus: FOCUSABLE_ITEM.TRACK_LIST,
                            focusIndex: 1 } ],
-  [ GESTURE.PRESS,       { noop: true } ]
+  [ GESTURE.PRESS,       { noop: true } ],
+  [ GESTURE.PINCH_IN,    { noop: true } ],
+  [ GESTURE.PINCH_OUT,   { noop: true } ]
 ]);
 
 // action map for track list in music-library
@@ -26,7 +28,10 @@ const trackListActionMap = new Map([
   [ GESTURE.SWIPE_UP,    { focusIndexMinus: 1 } ],
   [ GESTURE.SWIPE_DOWN,  { focusIndexPlus: 1 } ],
   [ GESTURE.TAP,         { playSelectedTrack: true } ],
-  [ GESTURE.PRESS,       { noop: true } ]
+  [ GESTURE.PRESS,       { noop: true } ],
+  [ GESTURE.PINCH_IN,    { view: VIEW.HOME, 
+                           focus: FOCUSABLE_ITEM.MUSIC_LIBRARY } ],
+  [ GESTURE.PINCH_OUT,   { noop: true } ]
 ]);
 
 // action map for movie library icon at home page.
@@ -37,7 +42,9 @@ const movieActionMap = new Map([
   [ GESTURE.SWIPE_UP,    { noop: true } ],
   [ GESTURE.SWIPE_DOWN,  { focus: FOCUSABLE_ITEM.PLAY_BUTTON } ],
   [ GESTURE.TAP,         { view: VIEW.MOVIE } ],
-  [ GESTURE.PRESS,       { noop: true } ]
+  [ GESTURE.PRESS,       { noop: true } ],
+  [ GESTURE.PINCH_IN,    { noop: true } ],
+  [ GESTURE.PINCH_OUT,   { noop: true } ]
 ]);
 
 // action map for play button in now-playing.
@@ -48,7 +55,9 @@ const playButtonActionMap = new Map([
   [ GESTURE.SWIPE_UP,    { upFromNowPlaying: true } ],
   [ GESTURE.SWIPE_DOWN,  { noop: true } ],
   [ GESTURE.TAP,         { togglePlayPause: true } ],
-  [ GESTURE.PRESS,       { noop: true } ]
+  [ GESTURE.PRESS,       { noop: true } ],
+  [ GESTURE.PINCH_IN,    { noop: true } ],
+  [ GESTURE.PINCH_OUT,   { noop: true } ]
 ]);
 
 // action map for previous button in now-playing.
@@ -59,7 +68,9 @@ const previousButtonActionMap = new Map([
   [ GESTURE.SWIPE_UP,    { upFromNowPlaying: true } ],
   [ GESTURE.SWIPE_DOWN,  { noop: true } ],
   [ GESTURE.TAP,         { previousTrack: true } ],
-  [ GESTURE.PRESS,       { noop: true } ]
+  [ GESTURE.PRESS,       { noop: true } ],
+  [ GESTURE.PINCH_IN,    { noop: true } ],
+  [ GESTURE.PINCH_OUT,   { noop: true } ]
 ]);
 
 // action map for previous button in now-playing.
@@ -70,7 +81,9 @@ const nextButtonActionMap = new Map([
   [ GESTURE.SWIPE_UP,    { upFromNowPlaying: true } ],
   [ GESTURE.SWIPE_DOWN,  { noop: true } ],
   [ GESTURE.TAP,         { nextTrack: true } ],
-  [ GESTURE.PRESS,       { noop: true } ]
+  [ GESTURE.PRESS,       { noop: true } ],
+  [ GESTURE.PINCH_IN,    { noop: true } ],
+  [ GESTURE.PINCH_OUT,   { noop: true } ]
 ]);
 
 // action flow at home page.

@@ -32,7 +32,9 @@ const GESTURE = {
   SWIPE_UP   : 'swipeUp',
   SWIPE_DOWN : 'swipeDown',
   TAP        : 'tap',
-  PRESS      : 'press'
+  PRESS      : 'press',
+  PINCH_IN   : 'pinchIn',
+  PINCH_OUT  : 'pinchOut'
 }
 
 const STR = {
@@ -79,6 +81,9 @@ const REMOTE_CTRL_SERVER = {
   WLAN_NAME: 'wlan0'
 }
 
+// ===== external drive names (hard-coded) =====
+const EXT_DRIVE_NAME = ['Fujitsu HDD USB Device'];
+
 module.exports = {
   LANGUAGE: LANGUAGE,
   VIEW: VIEW,
@@ -91,6 +96,8 @@ module.exports = {
 
   STR: STR,
 
-  REMOTE_CTRL_SERVER: REMOTE_CTRL_SERVER
+  REMOTE_CTRL_SERVER: REMOTE_CTRL_SERVER,
+
+  EXT_DRIVE_NAME: EXT_DRIVE_NAME
 
 }

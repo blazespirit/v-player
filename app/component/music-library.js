@@ -38,7 +38,7 @@ const musicLibrary = {
       return this.$store.getters.getTrackList;
     },
     focusIndex: function() {
-      return this.$store.getters.getFocusIndex;
+      return this.$store.getters.getMusicFocusIndex;
     },
     isFocus: function() {
       return this.$store.getters.getFocus === FOCUSABLE_ITEM.TRACK_LIST;

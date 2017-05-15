@@ -23,7 +23,7 @@ const FOCUSABLE_ITEM = {
   TRACK_LIST: 'trackList',
 
   // movie library
-  MOVIE_LIST: 'movieLibrary'
+  MOVIE_LIST: 'movieList'
 }
 
 const GESTURE = {
@@ -61,6 +61,10 @@ const MUSIC = {
   TRACK_PER_PAGE: 10,
 }
 
+const MOVIE = {
+  MOVIE_PER_PAGE: 10,
+}
+
 const STATUS = {
   FETCHING: 'fetching',
   FETCH_COMPLETE: 'fetchComplete'
@@ -81,6 +85,14 @@ const REMOTE_CTRL_SERVER = {
   WLAN_NAME: 'wlan0'
 }
 
+const EVENT = {
+  INIT: 'init',
+  SCAN_MUSIC_DONE: 'scanMusicDone',
+  SCAN_MOVIE_DONE: 'scanMovieDone',
+  EXT_DRIVE_PATH: 'extDrivePath',
+  NO_EXT_DRIVE_FOUND: 'noExtDriveFound'
+}
+
 // ===== external drive names (hard-coded) =====
 const EXT_DRIVE_NAME = ['Fujitsu HDD USB Device'];
 
@@ -91,12 +103,14 @@ module.exports = {
   GESTURE: GESTURE,
 
   MUSIC: MUSIC,
+  MOVIE: MOVIE,
   STATUS: STATUS,
   DATABASE: DATABASE,
 
   STR: STR,
 
   REMOTE_CTRL_SERVER: REMOTE_CTRL_SERVER,
+  EVENT: EVENT,
 
   EXT_DRIVE_NAME: EXT_DRIVE_NAME
 

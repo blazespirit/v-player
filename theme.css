@@ -436,15 +436,6 @@ html, body {
   justify-content: space-between;
 }
 
-#music-library .category .song,
-#music-library .category .album,
-#music-library .category .artist {
-  width: 30%;
-  padding: 5px;
-  text-align: center;
-  border: 2px solid lightblue;
-}
-
 #music-library .label {
   height: 6.7vh;
   padding: 5px 0px 0px 15px;
@@ -476,9 +467,88 @@ html, body {
 
 /* movie-library component */
 #movie-library {
-  width: 50vw;
-  margin: auto;
+  display: flex;
   font-weight: 300;
+}
+
+#movie-library .left-box,
+#movie-library .right-box {
+  width: 20vw;
+}
+
+#movie-library .left-box .previous-page-icon,
+#movie-library .right-box .next-page-icon {
+  height: 65vh;
+}
+
+#movie-library .left-box .previous-page-icon {
+  background-image: url('./assets/icon/previous-page-120.png');
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+#movie-library .left-box .previous-page-icon.hide {
+  background-image: none;
+}
+
+#movie-library .right-box .next-page-icon {
+  background-image: url('./assets/icon/next-page-120.png');
+  background-position: left;
+  background-repeat: no-repeat;
+}
+
+#movie-library .right-box .next-page-icon.hide {
+  background-image: none;
+}
+
+#movie-library .left-box .blank-space,
+#movie-library .right-box .movie-page {
+  height: 10vh;
+}
+
+#movie-library .right-box .track-page {
+  font-weight: 100;
+  line-height: 10vh;
+  text-align: center;
+}
+
+#movie-library .middle-box {
+  width: 60vw;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#movie-library .category {
+  display: flex;
+  justify-content: space-between;
+}
+
+#movie-library .label {
+  height: 6.7vh;
+  padding: 5px 0px 0px 15px;
+  border-bottom: 0.3vh solid #18FFFF;
+}
+
+#movie-library .movie-list {
+  height: 67vh;
+}
+
+#movie-library .movie-list .movie {
+  height: calc((67vh - 60px) / 10);
+  line-height: calc((67vh - 60px) / 10);
+  box-sizing: border-box;
+  padding: 0px 15px 0px 15px;
+  margin: 6px 0px 6px 0px;
+  font-size: 1rem;
+  font-weight: 100;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+#movie-library .movie-list .movie.focus {
+  background-color: rgba(255,255,255, 0.45);
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 1);
 }
 
 /* loading-overlay component */

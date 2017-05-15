@@ -2,7 +2,6 @@ const PATH = 'C:\\Users\\blaze_spirit\\Desktop\\testing-groud\\music-library-2';
 const PATH2 = 'E:\\My_Music';
 
 //==================================
-const drivelist = require('drivelist');
 const filewalker = require('filewalker');
 const fileSystem = require('fs');
 const musicMetadata = require('musicmetadata');
@@ -13,41 +12,22 @@ const mediaDB = new tingoDB('./app/music-library', {});
 const musicCollection = mediaDB.collection("music-collection.db");
 
 const { DATABASE,
-        MUSIC } = require('../config-constant');
+        MUSIC,
+        EVENT } = require('../config-constant');
 
-const init = function(vuexStore) {
-  let extDrivePath = [];
+const eventBus = require('../event-bus');
 
-  drivelist.list((error, drivesList) => {
-    if (error) {
-      throw error;
-    }
-    console.log(drivesList);
-    for (let i = 0; i < drivesList.length; i++) {
-      if (drivesList[i].system === false) { // get storage drive which are not system. (external drives)
-        let mountPointList = drivesList[i].mountpoints;
-
-        for (let j = 0; j < mountPointList.length; j++) {
-          extDrivePath.push(mountPointList[j].path);
-        }
-      }
-    }
-    console.log(extDrivePath);
-  });
-}
-
-const _init = function(vuexStore) {
+const scan = function(vuexStore, extDrivePath) {
   let totalRecord = null;
   let insertedRecord = 0;
 
   musicCollection.findOne({}, function(err, item) {
     if (item === null) { // collection not exist. Perform full initialization.
-      vuexStore.commit('SHOW_LOADING');
       // callback hell start here.
       // 1. filewalker traverse the directory specified.
       // 2. on 'file' event, extract metadata.
       // 3. extracted metadata will be inserted to DB.
-      filewalker(PATH2, { matchRegExp: /\.(?:mp3)$/i }) // TODO -- get PATH from user input.
+      filewalker(extDrivePathList[0], { matchRegExp: /\.(?:mp3)$/i }) // TODO -- temporaly get 1st ext drive.
         .on('file', function(relativePath, stats, fullPath) {
           let readableStream = fileSystem.createReadStream(fullPath);
           let trackObj = { };
@@ -101,9 +81,8 @@ const _init = function(vuexStore) {
           totalRecord = this.files;
         })
       .walk();
-
     } else {
-
+      eventBus.$emit(EVENT.SCAN_MUSIC_DONE); // TODO -- may need to refactor.
     }
   });
 };
@@ -186,7 +165,7 @@ const getTotalTrackNumber = function() {
 const updatePagination = function(vuexStore) {
   musicCollection.count({ type: 'track' }, function(err, count) {
     let totalPage = Math.ceil(count / MUSIC.TRACK_PER_PAGE);
-    vuexStore.commit('UPDATE_PAGINATION', totalPage);
+    vuexStore.commit('UPDATE_MUSIC_PAGINATION', totalPage);
   });
 };
 
@@ -260,7 +239,7 @@ const _processAlbumGrouping = function() {
                           processedAlbum++;
 
                           if (processedAlbum === totalAlbum) {
-                            vuexStore.commit('HIDE_LOADING');
+                            eventBus.$emit(EVENT.SCAN_MUSIC_DONE);
                           }
                         });
                      });
@@ -270,7 +249,7 @@ const _processAlbumGrouping = function() {
 
 const musicManager = {
   // methods
-  init: init,
+  scan: scan,
   getTrackList: getTrackList,
   getSingleTrack: getSingleTrack,
   getSingleTrackAndPlay: getSingleTrackAndPlay,

@@ -13,6 +13,8 @@ const nowPlaying = require('./app/component/now-playing');
 const musicLibrary = require('./app/component/music-library');
 const movieLibrary = require('./app/component/movie-library');
 
+const mediaManager = require('./app/media-manager');
+
 // register component at 'global' scope.
 // eg, popup dialog.
 // Vue.component('music', musicLibrary);
@@ -55,7 +57,5 @@ let vm = new Vue({
 // ===== remote control server =====
 require('./app/remote-control-server').startServer();
 
-// ===== music-library =====
-const musicMananger = require('./app/music-library/music-manager');
-
-musicMananger.init(vm.$store);
+// ===== Initialization =====
+mediaManager.init();

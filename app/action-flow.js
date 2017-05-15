@@ -14,7 +14,7 @@ const musicActionMap = new Map([
   [ GESTURE.SWIPE_DOWN,  { focus: FOCUSABLE_ITEM.PLAY_BUTTON } ],
   [ GESTURE.TAP,         { view: VIEW.MUSIC, 
                            focus: FOCUSABLE_ITEM.TRACK_LIST,
-                           focusIndex: 1 } ],
+                           musicFocusIndex: 0 } ],
   [ GESTURE.PRESS,       { noop: true } ],
   [ GESTURE.PINCH_IN,    { noop: true } ],
   [ GESTURE.PINCH_OUT,   { noop: true } ]
@@ -25,8 +25,8 @@ const trackListActionMap = new Map([
   // key & value pair array.
   [ GESTURE.SWIPE_LEFT,  { trackListPreviousPage: true } ], // no operation.
   [ GESTURE.SWIPE_RIGHT, { trackListNextPage: true } ],
-  [ GESTURE.SWIPE_UP,    { focusIndexMinus: 1 } ],
-  [ GESTURE.SWIPE_DOWN,  { focusIndexPlus: 1 } ],
+  [ GESTURE.SWIPE_UP,    { musicFocusIndexMinus: 1 } ],
+  [ GESTURE.SWIPE_DOWN,  { musicFocusIndexPlus: 1 } ],
   [ GESTURE.TAP,         { playSelectedTrack: true } ],
   [ GESTURE.PRESS,       { noop: true } ],
   [ GESTURE.PINCH_IN,    { view: VIEW.HOME, 
@@ -41,9 +41,25 @@ const movieActionMap = new Map([
   [ GESTURE.SWIPE_RIGHT, { noop: true } ], // no operation.
   [ GESTURE.SWIPE_UP,    { noop: true } ],
   [ GESTURE.SWIPE_DOWN,  { focus: FOCUSABLE_ITEM.PLAY_BUTTON } ],
-  [ GESTURE.TAP,         { view: VIEW.MOVIE } ],
+  [ GESTURE.TAP,         { view: VIEW.MOVIE,
+                           focus: FOCUSABLE_ITEM.MOVIE_LIST,
+                           movieFocusIndex: 0 } ],
   [ GESTURE.PRESS,       { noop: true } ],
   [ GESTURE.PINCH_IN,    { noop: true } ],
+  [ GESTURE.PINCH_OUT,   { noop: true } ]
+]);
+
+// action map for movie list in movie-library
+const movieListActionMap = new Map([
+  // key & value pair array.
+  [ GESTURE.SWIPE_LEFT,  { movieListPreviousPage: true } ], // no operation.
+  [ GESTURE.SWIPE_RIGHT, { movieListNextPage: true } ],
+  [ GESTURE.SWIPE_UP,    { movieFocusIndexMinus: 1 } ],
+  [ GESTURE.SWIPE_DOWN,  { movieFocusIndexPlus: 1 } ],
+  [ GESTURE.TAP,         { playSelectedMovie: true } ],
+  [ GESTURE.PRESS,       { noop: true } ],
+  [ GESTURE.PINCH_IN,    { view: VIEW.HOME, 
+                           focus: FOCUSABLE_ITEM.MOVIE_LIBRARY } ],
   [ GESTURE.PINCH_OUT,   { noop: true } ]
 ]);
 
@@ -92,6 +108,9 @@ stateActionMap.set(FOCUSABLE_ITEM.MOVIE_LIBRARY, movieActionMap);
 
 // action flow at music-library page.
 stateActionMap.set(FOCUSABLE_ITEM.TRACK_LIST, trackListActionMap);
+
+// action flow at movie-library page.
+stateActionMap.set(FOCUSABLE_ITEM.MOVIE_LIST, movieListActionMap);
 
 // action flow for now-playing.
 stateActionMap.set(FOCUSABLE_ITEM.PLAY_BUTTON, playButtonActionMap);

@@ -8,11 +8,13 @@ const { LANGUAGE,
         FOCUSABLE_ITEM,
         STR,
         MUSIC,
+        MOVIE,
         STATUS } = require('../config-constant');
 
 const actionFlow = require('../action-flow');
 
 const musicManager = require('../music-library/music-manager');
+const movieManager = require('../movie-library/movie-manager');
 
 Vue.use(Vuex);
 
@@ -31,6 +33,14 @@ const vuexStore = new Vuex.Store({
       trackList: [],
       trackListCurrentPage: 1,
       trackListTotalPage: null,
+      focusIndex: 0 // array based index. (start from 0)
+    },
+
+    // state for movie library.
+    movieLibrary: {
+      movieList: [],
+      movieListCurrentPage: 1,
+      movieListTotalPage: null,
       focusIndex: 0 // array based index. (start from 0)
     },
 
@@ -57,6 +67,7 @@ const vuexStore = new Vuex.Store({
       state.view = view;
     },
     NAVIGATION_ACTION: function(state, actionObj) {
+      console.log(state.focus);
       let stateObj = actionFlow.getStateObj(state.focus, actionObj.gesture);
       
       if (stateObj.noop) {
@@ -68,29 +79,29 @@ const vuexStore = new Vuex.Store({
       if (stateObj.focus) {
         state.focus = stateObj.focus;
       }
-      // track list navigation.
-      if (stateObj.focusIndex) {
-        state.focusIndex = stateObj.focusIndex;
+      // ===== track list navigation =====
+      if (stateObj.musicFocusIndex) {
+        state.musicLibrary.focusIndex = stateObj.musicFocusIndex;
       }
-      if (stateObj.focusIndexPlus && typeof stateObj.focusIndexPlus === 'number') {
+      if (stateObj.musicFocusIndexPlus && typeof stateObj.musicFocusIndexPlus === 'number') {
         // prevent index > track list length.
         // if index > track list length, go to now-playing 'play' button.
-        if (state.musicLibrary.focusIndex + stateObj.focusIndexPlus > state.musicLibrary.trackList.length - 1) {
+        if (state.musicLibrary.focusIndex + stateObj.musicFocusIndexPlus > state.musicLibrary.trackList.length - 1) {
           state.musicLibrary.focusIndex = state.musicLibrary.trackList.length - 1;
 
           state.focus = FOCUSABLE_ITEM.PLAY_BUTTON
         }
         else {
-          state.musicLibrary.focusIndex += stateObj.focusIndexPlus;
+          state.musicLibrary.focusIndex += stateObj.musicFocusIndexPlus;
         }
       }
-      if (stateObj.focusIndexMinus && typeof stateObj.focusIndexMinus === 'number') {
+      if (stateObj.musicFocusIndexMinus && typeof stateObj.musicFocusIndexMinus === 'number') {
         // prevent index < 1.
-        if (state.musicLibrary.focusIndex - stateObj.focusIndexMinus < 0) {
+        if (state.musicLibrary.focusIndex - stateObj.musicFocusIndexMinus < 0) {
           state.musicLibrary.focusIndex = 0;
         }
         else {
-          state.musicLibrary.focusIndex -= stateObj.focusIndexMinus
+          state.musicLibrary.focusIndex -= stateObj.musicFocusIndexMinus
         }
       }
       if (stateObj.trackListPreviousPage) {
@@ -106,7 +117,36 @@ const vuexStore = new Vuex.Store({
         state.nowPlaying.index = offset + index;
         _getTrackAndPlay(state);
       }
-      // now-playing navigation.
+      // ===== movie list navigation =====
+      if (stateObj.movieFocusIndex) {
+        state.moviecLibrary.focusIndex = stateObj.movieFocusIndex;
+      }
+      if (stateObj.movieFocusIndexPlus && typeof stateObj.movieFocusIndexPlus === 'number') {
+        // prevent index > movie list length.
+        // if index > movie list length, go to now-playing 'play' button.
+        if (state.movieLibrary.focusIndex + stateObj.movieFocusIndexPlus > state.movieLibrary.trackList.length - 1) {
+          state.movieLibrary.focusIndex = state.movieLibrary.movieList.length - 1;
+
+          state.focus = FOCUSABLE_ITEM.PLAY_BUTTON
+        }
+        else {
+          state.movieLibrary.focusIndex += stateObj.movieFocusIndexPlus;
+        }
+      }
+      if (stateObj.movieListPreviousPage) {
+        _movieListPreviousPage(state);
+      }
+      if (stateObj.movieListNextPage) {
+        _movieListNextPage(state);
+      }
+      if (stateObj.playSelectedMovie) {
+        // let offset = (state.movieLibrary.movieListCurrentPage - 1) * MOVIE.MOVIE_PER_PAGE;
+        // let index = state.movieLibrary.focusIndex;
+
+        // state.nowPlaying.index = offset + index;
+        // _getTrackAndPlay(state);
+      }
+      // ===== now-playing navigation =====
       if (stateObj.togglePlayPause) {
         _togglePlayPause(state);
       }
@@ -125,6 +165,7 @@ const vuexStore = new Vuex.Store({
         _nextTrack(state);
       }
     },
+    // ========== music-library ==========
     // this function is used by 'GET_TRACK_LIST', 'GET_TRACK_LIST_NEXT_PAGE', & 'GET_TRACK_LIST_PREVIOUS_PAGE'
     // to update the state of tracklist after fetch from DB.
     UPDATE_TRACK_LIST: function(state, trackObj) {
@@ -138,7 +179,7 @@ const vuexStore = new Vuex.Store({
     GET_TRACK_LIST: function(state) {
       musicManager.getTrackList(MUSIC.TRACK_PER_PAGE, state.musicLibrary.trackListCurrentPage, vuexStore);
     },
-    UPDATE_PAGINATION: function(state, totalPage) {
+    UPDATE_MUSIC_PAGINATION: function(state, totalPage) {
       state.musicLibrary.trackListTotalPage = totalPage;
     },
     INIT_MUSIC_LIBRARY: function(state) {
@@ -150,6 +191,31 @@ const vuexStore = new Vuex.Store({
     },
     GET_TRACK_LIST_PREVIOUS_PAGE: function(state) {
       _trackListPreviousPage(state);
+    },
+    // ========== movie-library ==========
+    UPDATE_MOVIE_LIST: function(state, movieObj) {
+      state.movieLibrary.movieList = movieObj.movieList;
+
+      // if returned movie list < focus index, update focus index.
+      if (state.movieLibrary.focusIndex > movieObj.movieList.length - 1) {
+        state.movieLibrary.focusIndex = movieObj.movieList.length - 1;
+      }
+    },
+    GET_MOVIE_LIST: function(state) {
+      movieManager.getMovieList(MOVIE.MOVIE_PER_PAGE, state.movieLibrary.movieListCurrentPage, vuexStore);
+    },
+    UPDATE_MOVIE_PAGINATION: function(state, totalPage) {
+      state.movieLibrary.movieListTotalPage = totalPage;
+    },
+    INIT_MOVIE_LIBRARY: function(state) {
+      movieManager.getMovieList(MOVIE.MOVIE_PER_PAGE, state.movieLibrary.movieListCurrentPage, vuexStore);
+      movieManager.updatePagination(vuexStore);
+    },
+    GET_MOVIE_LIST_NEXT_PAGE: function(state) {
+      _movieListNextPage(state);
+    },
+    GET_MOVIE_LIST_PREVIOUS_PAGE: function(state) {
+      _movieListPreviousPage(state);
     },
     // ========== now-playing ==========
     UPDATE_TRACK: function(state, trackObj) {
@@ -196,6 +262,9 @@ const vuexStore = new Vuex.Store({
     HIDE_LOADING: function(state){
       state.loadingOverlay.isShow = false;
     },
+    UPDATE_LOADING_TEXT: function(state, text) {
+      state.loadingOverlay.loadingText = text;
+    },
     toggleLanguage: function(state) { // TODO -- remove this later.
       if (state.language === LANGUAGE.ENGLISH) {
         state.language = LANGUAGE.CHINESE;
@@ -219,7 +288,7 @@ const vuexStore = new Vuex.Store({
       return state.view;
     },
     // ========== music-library getter ==========
-    getFocusIndex: function(state) {
+    getMusicFocusIndex: function(state) {
       let index = state.musicLibrary.focusIndex;
 
       return index;
@@ -232,6 +301,21 @@ const vuexStore = new Vuex.Store({
     },
     getTrackListTotalPage: function(state) {
       return state.musicLibrary.trackListTotalPage;
+    },
+    // ========== movie-library getter ==========
+    getMovieFocusIndex: function(state) {
+      let index = state.movieLibrary.focusIndex;
+
+      return index;
+    },
+    getMovieList: function(state) {
+      return state.movieLibrary.movieList;
+    },
+    getMovieListCurrentPage: function(state) {
+      return state.movieLibrary.movieListCurrentPage;
+    },
+    getMovieListTotalPage: function(state) {
+      return state.movieLibrary.movieListTotalPage;
     },
     // ========== now-playing getter ==========
     getPath:function(state) {
@@ -311,6 +395,19 @@ function _trackListPreviousPage(state) {
     state.musicLibrary.trackListCurrentPage = 1;
   }
   musicManager.getTrackList(MUSIC.TRACK_PER_PAGE, state.musicLibrary.trackListCurrentPage, vuexStore);
+}
+
+function _movieListNextPage(state) { // TODO -- last page limit handling.
+  state.movieLibrary.movieListCurrentPage++;
+  movieManager.getMovieList(MOVIE.MOVIE_PER_PAGE, state.movieLibrary.movieListCurrentPage, vuexStore);
+}
+
+function _movieListPreviousPage(state) {
+  state.movieLibrary.movieListCurrentPage--;
+  if (state.movieLibrary.movieListCurrentPage < 1) { // prevent page number < 1;
+    state.movieLibrary.movieListCurrentPage = 1;
+  }
+  movieManager.getMovieList(MOVIE.MOVIE_PER_PAGE, state.movieLibrary.movieListCurrentPage, vuexStore);
 }
 
 module.exports = vuexStore;

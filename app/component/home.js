@@ -25,7 +25,7 @@ const home = {
       return this.$store.state.focus === CONFIG.FOCUSABLE_ITEM.MOVIE_LIBRARY;
     },
     viewChange: function() {
-      return this.$store.state.view; // TODO -- use getter function.
+      return this.$store.getters.getView;
     }
   },
   watch: {

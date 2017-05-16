@@ -33,8 +33,7 @@ const GESTURE = {
   SWIPE_DOWN : 'swipeDown',
   TAP        : 'tap',
   PRESS      : 'press',
-  PINCH_IN   : 'pinchIn',
-  PINCH_OUT  : 'pinchOut'
+  PINCH      : 'pinch'
 }
 
 const STR = {

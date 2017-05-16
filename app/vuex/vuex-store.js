@@ -124,13 +124,22 @@ const vuexStore = new Vuex.Store({
       if (stateObj.movieFocusIndexPlus && typeof stateObj.movieFocusIndexPlus === 'number') {
         // prevent index > movie list length.
         // if index > movie list length, go to now-playing 'play' button.
-        if (state.movieLibrary.focusIndex + stateObj.movieFocusIndexPlus > state.movieLibrary.trackList.length - 1) {
+        if (state.movieLibrary.focusIndex + stateObj.movieFocusIndexPlus > state.movieLibrary.movieList.length - 1) {
           state.movieLibrary.focusIndex = state.movieLibrary.movieList.length - 1;
 
           state.focus = FOCUSABLE_ITEM.PLAY_BUTTON
         }
         else {
           state.movieLibrary.focusIndex += stateObj.movieFocusIndexPlus;
+        }
+      }
+      if (stateObj.movieFocusIndexMinus && typeof stateObj.movieFocusIndexMinus === 'number') {
+        // prevent index < 1.
+        if (state.movieLibrary.focusIndex - stateObj.movieFocusIndexMinus < 0) {
+          state.movieLibrary.focusIndex = 0;
+        }
+        else {
+          state.movieLibrary.focusIndex -= stateObj.movieFocusIndexMinus
         }
       }
       if (stateObj.movieListPreviousPage) {
@@ -156,6 +165,9 @@ const vuexStore = new Vuex.Store({
         }
         else if (state.view === VIEW.MUSIC) {
           state.focus = FOCUSABLE_ITEM.TRACK_LIST;
+        }
+        else if (state.view === VIEW.MOVIE) {
+          state.focus = FOCUSABLE_ITEM.MOVIE_LIST;
         }
       }
       if (stateObj.previousTrack) {
@@ -384,8 +396,12 @@ function _previousTrack(state) {
   _getTrack(state);
 }
 
-function _trackListNextPage(state) { // TODO -- last page limit handling.
+function _trackListNextPage(state) {
   state.musicLibrary.trackListCurrentPage++;
+  if (typeof state.musicLibrary.trackListTotalPage === 'number' &&
+      state.musicLibrary.trackListCurrentPage > state.musicLibrary.trackListTotalPage) {
+        state.musicLibrary.trackListCurrentPage = state.musicLibrary.trackListTotalPage;
+  }
   musicManager.getTrackList(MUSIC.TRACK_PER_PAGE, state.musicLibrary.trackListCurrentPage, vuexStore);
 }
 
@@ -397,8 +413,12 @@ function _trackListPreviousPage(state) {
   musicManager.getTrackList(MUSIC.TRACK_PER_PAGE, state.musicLibrary.trackListCurrentPage, vuexStore);
 }
 
-function _movieListNextPage(state) { // TODO -- last page limit handling.
+function _movieListNextPage(state) {
   state.movieLibrary.movieListCurrentPage++;
+  if (typeof state.movieLibrary.movieListTotalPage === 'number' &&
+      state.movieLibrary.movieListCurrentPage > state.movieLibrary.movieListTotalPage) {
+        state.movieLibrary.movieListCurrentPage = state.movieLibrary.movieListTotalPage;
+  }
   movieManager.getMovieList(MOVIE.MOVIE_PER_PAGE, state.movieLibrary.movieListCurrentPage, vuexStore);
 }
 

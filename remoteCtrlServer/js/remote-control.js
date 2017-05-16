@@ -14,7 +14,7 @@ gesture.get('pinch').set({ enable: true });
 gesture.get('pan').set({ enable: false });
 gesture.get('rotate').set({ enable: false });
 
-// TODO -- define the config in remote control webapp too.
+// send trigerred event to v-player.
 gesture.on('swipeleft', (ev) => {
   divEl.textContent = "swipe left";
   socket.emit('action', 'swipeLeft');
@@ -45,13 +45,7 @@ gesture.on('press', (ev) => {
   socket.emit('action', 'press');
 });
 
-gesture.on('pinchin', (ev) => {
-  divEl.textContent = "pinchin";
-  socket.emit('action', 'pinchIn');
+gesture.on('pinchend', (ev) => {
+  divEl.textContent = "pinchEnd";
+  socket.emit('action', 'pinch');  
 });
-
-gesture.on('pinchout', (ev) => {
-  divEl.textContent = "pinchout";
-  socket.emit('action', 'pinchOut');
-});
-

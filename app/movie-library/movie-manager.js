@@ -26,15 +26,28 @@ const scan = function(vuexStore, extDrivePath) {
         .on('file', function(relativePath, stats, fullPath) {
           let movieFileName = fullPath.split('\\').pop().split('/').pop();
           let fileNameArray = movieFileName.split('].[');
-          let movieTitleEng = fileNameArray[1];
-          let movieTitleChi = fileNameArray[2].split(']')[0];
-          let movieGenre    = fileNameArray[0].split('[')[1];
+          let movieTitleEng = '';
+          let movieTitleChi = '';
+          let movieGenre = '';
+
+          if (fileNameArray.length === 3) {
+            movieTitleEng = fileNameArray[1];
+            movieTitleChi = fileNameArray[2].split(']')[0];
+            movieGenre    = fileNameArray[0].split('[')[1];
+          }
+          else {
+            movieTitleEng = movieFileName;
+            movieTitleChi = '';
+            movieGenre    = 'unknown';
+          }
+          
           let movieObj = { };
 
           movieObj._id = shortID.generate();
           movieObj.titleEng = movieTitleEng;
           movieObj.titleChi = movieTitleChi;
           movieObj.genre = movieGenre;
+          movieObj.path = fullPath;
 
           movieCollection.insert(movieObj, function(err, record){
             insertedRecord++;

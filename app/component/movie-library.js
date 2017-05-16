@@ -1,13 +1,14 @@
+const { VIEW, FOCUSABLE_ITEM } = require('../config-constant');
+
 const movieLibrary = {
   template: `
     <div id="movie-library">
       <div class="left-box">
         <div class="previous-page-icon"
              v-bind:class="{ 'hide': isFirstPage }"></div>
-        <div class="blank-space"></div>
       </div>
       <div class="middle-box">
-        <div class="label">Movie List</div>
+        <div class="label">Movie List: <span class="pagination">{{currentPage}} / {{totalPage}} page</span></div>
         <div class="movie-list">
           <div class="movie" 
               v-bind:class="{ 'focus': isFocus && index === focusIndex }"
@@ -19,7 +20,6 @@ const movieLibrary = {
       <div class="right-box">
         <div class="next-page-icon"
              v-bind:class="{ 'hide': isLastPage }"></div>
-        <div class="movie-page">{{currentPage}} / {{totalPage}} page</div>
       </div>
     </div>
   `,
@@ -33,7 +33,7 @@ const movieLibrary = {
   },
   computed: {
     movieList: function() {
-      return this.$store.getters.getTrackList;
+      return this.$store.getters.getMovieList;
     },
     focusIndex: function() {
       return this.$store.getters.getMovieFocusIndex;

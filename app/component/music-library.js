@@ -6,10 +6,9 @@ const musicLibrary = {
       <div class="left-box">
         <div class="previous-page-icon"
              v-bind:class="{ 'hide': isFirstPage }"></div>
-        <div class="blank-space"></div>
       </div>
       <div class="middle-box">
-        <div class="label">Track List</div>
+        <div class="label">Track List<span class="pagination">{{currentPage}} / {{totalPage}} page</span></div>
         <div class="song-list">
           <div class="track" 
               v-bind:class="{ 'focus': isFocus && index === focusIndex }"
@@ -21,7 +20,6 @@ const musicLibrary = {
       <div class="right-box">
         <div class="next-page-icon"
              v-bind:class="{ 'hide': isLastPage }"></div>
-        <div class="track-page">{{currentPage}} / {{totalPage}} page</div>
       </div>
     </div>
   `,

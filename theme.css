@@ -392,7 +392,7 @@ html, body {
 
 #music-library .left-box .previous-page-icon,
 #music-library .right-box .next-page-icon {
-  height: 65vh;
+  height: 75vh;
 }
 
 #music-library .left-box .previous-page-icon {
@@ -415,17 +415,6 @@ html, body {
   background-image: none;
 }
 
-#music-library .left-box .blank-space,
-#music-library .right-box .track-page {
-  height: 10vh;
-}
-
-#music-library .right-box .track-page {
-  font-weight: 100;
-  line-height: 10vh;
-  text-align: center;
-}
-
 #music-library .middle-box {
   width: 60vw;
   background-color: rgba(0, 0, 0, 0.5);
@@ -438,8 +427,13 @@ html, body {
 
 #music-library .label {
   height: 6.7vh;
-  padding: 5px 0px 0px 15px;
+  padding: 5px 15px 0px 15px;
   border-bottom: 0.3vh solid #18FFFF;
+}
+
+#music-library .pagination {
+  float: right;
+  font-weight: 100;
 }
 
 #music-library .song-list {
@@ -478,7 +472,7 @@ html, body {
 
 #movie-library .left-box .previous-page-icon,
 #movie-library .right-box .next-page-icon {
-  height: 65vh;
+  height: 75vh;
 }
 
 #movie-library .left-box .previous-page-icon {
@@ -501,17 +495,6 @@ html, body {
   background-image: none;
 }
 
-#movie-library .left-box .blank-space,
-#movie-library .right-box .movie-page {
-  height: 10vh;
-}
-
-#movie-library .right-box .track-page {
-  font-weight: 100;
-  line-height: 10vh;
-  text-align: center;
-}
-
 #movie-library .middle-box {
   width: 60vw;
   background-color: rgba(0, 0, 0, 0.5);
@@ -524,8 +507,12 @@ html, body {
 
 #movie-library .label {
   height: 6.7vh;
-  padding: 5px 0px 0px 15px;
+  padding: 5px 15px 0px 15px;
   border-bottom: 0.3vh solid #18FFFF;
+}
+
+#movie-library .pagination {
+  float: right;
 }
 
 #movie-library .movie-list {

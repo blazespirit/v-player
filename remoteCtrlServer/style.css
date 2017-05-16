@@ -34,6 +34,11 @@ html, body {
 #main {
   width: 100%;
   height: 100%;
-  background-color: lightskyblue;
+  color: white;
+  font-size: 50px;
   font-weight: 300;
+  background-image: url('./img/black_prism.png');
+  background-size: cover;
+  background-clip: border-box;
+  background-repeat: no-repeat;
 }

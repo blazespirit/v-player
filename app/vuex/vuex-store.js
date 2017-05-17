@@ -41,7 +41,8 @@ const vuexStore = new Vuex.Store({
       movieList: [],
       movieListCurrentPage: 1,
       movieListTotalPage: null,
-      focusIndex: 0 // array based index. (start from 0)
+      focusIndex: 0, // array based index. (start from 0)
+      status: null
     },
 
     // state for now-playing component
@@ -149,15 +150,27 @@ const vuexStore = new Vuex.Store({
         _movieListNextPage(state);
       }
       if (stateObj.playSelectedMovie) {
+        console.log('play selected...');
+        state.focus = FOCUSABLE_ITEM.OMX_PLAYER;
+        state.movieLibrary.status = MOVIE.STATUS_PLAY;
         // let offset = (state.movieLibrary.movieListCurrentPage - 1) * MOVIE.MOVIE_PER_PAGE;
         // let index = state.movieLibrary.focusIndex;
 
         // state.nowPlaying.index = offset + index;
         // _getTrackAndPlay(state);
       }
+      // ===== omxPlayer navigation =====
+      if (stateObj.toggleMoviePlayPause) {
+        if (state.movieLibrary.status === MOVIE.STATUS_PLAY) {
+          state.movieLibrary.status = MOVIE.STATUS_PAUSE;
+        }
+        else if (state.movieLibrary.status === MOVIE.STATUS_PAUSE) {
+          state.movieLibrary.status = MOVIE.STATUS_PLAY;
+        }
+      }
       // ===== now-playing navigation =====
-      if (stateObj.togglePlayPause) {
-        _togglePlayPause(state);
+      if (stateObj.toggleMusicPlayPause) {
+        _toggleMusicPlayPause(state);
       }
       if (stateObj.upFromNowPlaying) {
         if (state.view === VIEW.HOME) {
@@ -229,6 +242,9 @@ const vuexStore = new Vuex.Store({
     GET_MOVIE_LIST_PREVIOUS_PAGE: function(state) {
       _movieListPreviousPage(state);
     },
+    UPDATE_MOVIE_STATUS: function (state, status) {
+      state.movieLibrary.status = status;
+    },
     // ========== now-playing ==========
     UPDATE_TRACK: function(state, trackObj) {
       state.nowPlaying.title = trackObj.title;
@@ -258,8 +274,8 @@ const vuexStore = new Vuex.Store({
       _getTrackAndPlay(state);
 
     },
-    TOGGLE_PLAY_PAUSE: function(state) {
-      _togglePlayPause(state);
+    TOGGLE_MUSIC_PLAY_PAUSE: function(state) {
+      _toggleMusicPlayPause(state);
     },
     NEXT_TRACK: function(state) {
       _nextTrack(state);
@@ -329,6 +345,16 @@ const vuexStore = new Vuex.Store({
     getMovieListTotalPage: function(state) {
       return state.movieLibrary.movieListTotalPage;
     },
+    getMovieStatus: function(state) {
+      return state.movieLibrary.status;
+    },
+    getMovieFilePath: function(state) {
+      let movieList = state.movieLibrary.movieList;
+      let index = state.movieLibrary.focusIndex;
+      let path = movieList[index].path;
+      
+      return path;
+    },
     // ========== now-playing getter ==========
     getPath:function(state) {
       return state.nowPlaying.path;
@@ -345,7 +371,7 @@ const vuexStore = new Vuex.Store({
     getAlbumArtBase64:function(state) {
       return state.nowPlaying.albumArtBase64;
     },
-    isPlaying: function(state) {
+    isMusicPlaying: function(state) {
       return state.nowPlaying.isPlaying;
     },
     getFetchStatus: function(state) {
@@ -372,7 +398,7 @@ function _getTrackAndPlay(state) {
   musicManager.getSingleTrackAndPlay(state.nowPlaying.index, vuexStore);
 }
 
-function _togglePlayPause(state) {
+function _toggleMusicPlayPause(state) {
   if (state.nowPlaying.isPlaying === true) {
     state.nowPlaying.isPlaying = false;
   }

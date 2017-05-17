@@ -1,4 +1,7 @@
-const { VIEW, FOCUSABLE_ITEM } = require('../config-constant');
+const OmxManager = require('omx-manager');
+const { VIEW,
+        MOVIE,
+        FOCUSABLE_ITEM } = require('../config-constant');
 
 const movieLibrary = {
   template: `
@@ -23,6 +26,11 @@ const movieLibrary = {
       </div>
     </div>
   `,
+  data: function() {
+    return {
+      movie: null // use as reference for omx movie object.
+    };
+  },
   methods: {
     nextPage: function() {
       this.$store.commit('GET_MOVIE_LIST_NEXT_PAGE');
@@ -53,6 +61,9 @@ const movieLibrary = {
     isLastPage: function() {
       return (this.$store.getters.getMovieListCurrentPage === this.$store.getters.getMovieListTotalPage);
     },
+    status: function() {
+      return this.$store.getters.getMovieStatus;
+    },
     viewChange: function() {
       return this.$store.getters.getView;
     }
@@ -61,6 +72,29 @@ const movieLibrary = {
     viewChange: function(view) {
       if (view === VIEW.HOME) {
         this.$router.push('home');
+      }
+    },
+    status: function(status) {
+      if (status === MOVIE.STATUS_PLAY) {
+        if (this.movie === null) {
+          let manager = new OmxManager();
+          this.movie = manager.create(this.$store.getters.getMovieFilePath); // TODO -- error handling for not-exist file.
+          this.movie.play();
+        }
+        else {
+          this.movie.play();
+        }
+        
+        this.movie.on('end', () => {
+          this.$store.commit('UPDATE_MOVIE_STATUS', MOVIE.STATUS_STOP);
+        });
+      }
+      else if (status === MOVIE.STATUS_PAUSE) {
+        this.movie.pause();
+      }
+      else if (status === MOVIE.STATUS_STOP) {
+        this.movie.stop();
+        this.movie = null;
       }
     }
   },

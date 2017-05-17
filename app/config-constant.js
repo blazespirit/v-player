@@ -23,7 +23,10 @@ const FOCUSABLE_ITEM = {
   TRACK_LIST: 'trackList',
 
   // movie library
-  MOVIE_LIST: 'movieList'
+  MOVIE_LIST: 'movieList',
+
+  // OMX
+  OMX_PLAYER: 'omxPlayer'
 }
 
 const GESTURE = {
@@ -57,11 +60,14 @@ const STR = {
 };
 
 const MUSIC = {
-  TRACK_PER_PAGE: 10,
+  TRACK_PER_PAGE: 10
 }
 
 const MOVIE = {
   MOVIE_PER_PAGE: 10,
+  STATUS_PLAY: 'play',
+  STATUS_PAUSE: 'pause',
+  STATUS_STOP: 'stop'
 }
 
 const STATUS = {

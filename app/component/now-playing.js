@@ -40,7 +40,7 @@ const nowPlaying = {
   },
   methods: {
     togglePlayPause: function() {
-      this.$store.commit('TOGGLE_PLAY_PAUSE');
+      this.$store.commit('TOGGLE_MUSIC_PLAY_PAUSE');
     },
     nextTrack: function() {
       this.$store.commit('NEXT_TRACK');
@@ -97,7 +97,7 @@ const nowPlaying = {
       return this.$store.getters.getFetchStatus;
     },
     isPlaying: function() {
-      return this.$store.getters.isPlaying;
+      return this.$store.getters.isMusicPlaying;
     },
     playFocus: function() {
       return this.$store.state.focus === FOCUSABLE_ITEM.PLAY_BUTTON;

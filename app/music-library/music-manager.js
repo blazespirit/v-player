@@ -17,7 +17,7 @@ const { DATABASE,
 
 const eventBus = require('../event-bus');
 
-const scan = function(vuexStore, extDrivePath) {
+const scan = function(vuexStore, extDrivePathList) {
   let totalRecord = null;
   let insertedRecord = 0;
 

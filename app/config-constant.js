@@ -67,7 +67,19 @@ const MOVIE = {
   MOVIE_PER_PAGE: 10,
   STATUS_PLAY: 'play',
   STATUS_PAUSE: 'pause',
-  STATUS_STOP: 'stop'
+  STATUS_STOP: 'stop',
+  GENRE: {
+    ACTION   : 'action',
+    ANIMATION: 'animation',
+    COMEDY   : 'comedy',
+    CRIME    : 'crime',
+    DRAMA    : 'drama',
+    HORROR   : 'horror',
+    MYSTERY  : 'mystery',
+    ROMANCE  : 'romance',
+    SCI_FI   : 'sciFi',
+    UNKNOWN  : 'unknown'
+  }
 }
 
 const STATUS = {

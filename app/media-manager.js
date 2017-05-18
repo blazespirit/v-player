@@ -27,7 +27,7 @@ const init = function() {
   });
 
   eventBus.$on(EVENT.SCAN_MUSIC_DONE, function() {
-    // start scan for movue files.
+    // start scan for movie files.
     vuexStore.commit('UPDATE_LOADING_TEXT', 'Scanning movie files...');
     movieManager.scan(vuexStore, pathList);
   });
@@ -37,7 +37,7 @@ const init = function() {
   });
 
   eventBus.$on(EVENT.NO_EXT_DRIVE_FOUND, function() {
-    // handle for no external drive found.
+    // TODO -- handle for no external drive found.
     vuexStore.commit('UPDATE_LOADING_TEXT', 'No external drive found.');
     vuexStore.commit('SHOW_LOADING');
   });

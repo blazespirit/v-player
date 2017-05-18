@@ -19,7 +19,7 @@ const movieLibrary = {
           <div class="movie" 
               v-bind:class="{ 'focus': isFocus && index === focusIndex }"
               v-for="(movie, index) in movieList">
-                  {{ movie.titleEng }}
+                  [{{movieGenreLocalized(movie.genre)}}] - {{movie.titleChi}} - {{movie.titleEng}}
           </div>
         </div>
       </div>
@@ -40,6 +40,42 @@ const movieLibrary = {
     },
     previousPage: function() {
       this.$store.commit('GET_MOVIE_LIST_PREVIOUS_PAGE');
+    },
+    movieGenreLocalized: function(genre) {
+      let language = this.$store.getters.getLanguage;
+      let rscKey;
+
+      if (genre.toUpperCase() === MOVIE.GENRE.ACTION.toUpperCase()) {
+        rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.GENRE_ACTION);
+      }
+      else if (genre.toUpperCase() === MOVIE.GENRE.ANIMATION.toUpperCase()) {
+        rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.GENRE_ANIMATION);
+      }
+      else if (genre.toUpperCase() === MOVIE.GENRE.COMEDY.toUpperCase()) {
+        rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.GENRE_ANIMATION);
+      }
+      else if (genre.toUpperCase() === MOVIE.GENRE.CRIME.toUpperCase()) {
+        rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.GENRE_CRIME);
+      }
+      else if (genre.toUpperCase() === MOVIE.GENRE.DRAMA.toUpperCase()) {
+        rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.GENRE_DRAMA);
+      }
+      else if (genre.toUpperCase() === MOVIE.GENRE.HORROR.toUpperCase()) {
+        rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.GENRE_HORROR);
+      }
+      else if (genre.toUpperCase() === MOVIE.GENRE.MYSTERY.toUpperCase()) {
+        rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.GENRE_MYSTERY);
+      }
+      else if (genre.toUpperCase() === MOVIE.GENRE.ROMANCE.toUpperCase()) {
+        rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.GENRE_ROMANCE);
+      }
+      else if (genre.toUpperCase() === MOVIE.GENRE.SCI_FI.toUpperCase()) {
+        rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.GENRE_SCI_FI);
+      }
+      else {
+        rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.GENRE_UNKNOWN);
+      }
+      return rscKey;
     }
   },
   computed: {

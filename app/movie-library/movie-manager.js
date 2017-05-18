@@ -22,7 +22,7 @@ const scan = function(vuexStore, extDrivePath) {
       // 1. filewalker traverse the directory specified.
       // 2. on 'file' event, extract info from file name.
       // 3. extracted info will be inserted to DB.
-      filewalker(extDrivePathList[0], { matchRegExp: /\.(?:avi|mp4|mkv)$/i }) // TODO -- temporaly get 1st ext drive.
+      filewalker(extDrivePath[0], { matchRegExp: /\.(?:avi|mp4|mkv)$/i }) // TODO -- temporaly get 1st ext drive.
         .on('file', function(relativePath, stats, fullPath) {
           let movieFileName = fullPath.split('\\').pop().split('/').pop();
           let fileNameArray = movieFileName.split('].[');

@@ -1,7 +1,10 @@
 const OmxManager = require('omx-manager');
 const { VIEW,
         MOVIE,
+        OMX,
         FOCUSABLE_ITEM } = require('../config-constant');
+
+const RSC_KEY = require('../resource-key');
 
 const movieLibrary = {
   template: `
@@ -11,7 +14,7 @@ const movieLibrary = {
              v-bind:class="{ 'hide': isFirstPage }"></div>
       </div>
       <div class="middle-box">
-        <div class="label">Movie List: <span class="pagination">{{currentPage}} / {{totalPage}} page</span></div>
+        <div class="label">{{rscKeyMovieList}}<span class="pagination">{{currentPage}} / {{totalPage}} {{rscKeyPage}}</span></div>
         <div class="movie-list">
           <div class="movie" 
               v-bind:class="{ 'focus': isFocus && index === focusIndex }"
@@ -66,6 +69,17 @@ const movieLibrary = {
     },
     viewChange: function() {
       return this.$store.getters.getView;
+    },
+    // resource key
+    rscKeyPage: function() {
+      let language = this.$store.getters.getLanguage;
+      let rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.PAGE);
+      return rscKey;
+    },
+    rscKeyMovieList: function() {
+      let language = this.$store.getters.getLanguage;
+      let rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.MOVIE_LIST);
+      return rscKey;
     }
   },
   watch: {
@@ -78,7 +92,7 @@ const movieLibrary = {
       if (status === MOVIE.STATUS_PLAY) {
         if (this.movie === null) {
           let manager = new OmxManager();
-          this.movie = manager.create(this.$store.getters.getMovieFilePath); // TODO -- error handling for not-exist file.
+          this.movie = manager.create(this.$store.getters.getMovieFilePath, OMX.OPTION); // TODO -- error handling for not-exist file.
           this.movie.play();
         }
         else {

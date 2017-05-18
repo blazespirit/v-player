@@ -1,4 +1,5 @@
 const { VIEW, FOCUSABLE_ITEM } = require('../config-constant');
+const RSC_KEY = require('../resource-key');
 
 const musicLibrary = {
   template: `
@@ -8,7 +9,7 @@ const musicLibrary = {
              v-bind:class="{ 'hide': isFirstPage }"></div>
       </div>
       <div class="middle-box">
-        <div class="label">Track List<span class="pagination">{{currentPage}} / {{totalPage}} page</span></div>
+        <div class="label">{{rscKeyTrackList}}<span class="pagination">{{currentPage}} / {{totalPage}} {{rscKeyPage}}</span></div>
         <div class="song-list">
           <div class="track" 
               v-bind:class="{ 'focus': isFocus && index === focusIndex }"
@@ -55,6 +56,17 @@ const musicLibrary = {
     },
     viewChange: function() {
       return this.$store.getters.getView;
+    },
+    // resource key
+    rscKeyPage: function() {
+      let language = this.$store.getters.getLanguage;
+      let rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.PAGE);
+      return rscKey;
+    },
+    rscKeyTrackList: function() {
+      let language = this.$store.getters.getLanguage;
+      let rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.TRACK_LIST);
+      return rscKey;
     }
   },
   watch: {

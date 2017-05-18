@@ -98,6 +98,14 @@ const EVENT = {
   NO_EXT_DRIVE_FOUND: 'noExtDriveFound'
 }
 
+const OMX = {
+  OPTION: {
+    '-b': true,             // Set background to black
+    '-o': 'hdmi',           // Audio output device.
+    '--no-ghost-box': true  // No semitransparent boxes behind subtitles
+  }
+}
+
 // ===== external drive names (hard-coded) =====
 const EXT_DRIVE_NAME = ['Fujitsu HDD USB Device'];
 
@@ -116,6 +124,7 @@ module.exports = {
 
   REMOTE_CTRL_SERVER: REMOTE_CTRL_SERVER,
   EVENT: EVENT,
+  OMX: OMX,
 
   EXT_DRIVE_NAME: EXT_DRIVE_NAME
 

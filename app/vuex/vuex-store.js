@@ -22,7 +22,7 @@ const vuexStore = new Vuex.Store({
   strict: true, // strict mode.
   state: {
     // application settings
-    language: LANGUAGE.ENGLISH,
+    language: LANGUAGE.CHINESE,
 
     // state for GUI
     view: VIEW.HOME,
@@ -153,11 +153,6 @@ const vuexStore = new Vuex.Store({
         console.log('play selected...');
         state.focus = FOCUSABLE_ITEM.OMX_PLAYER;
         state.movieLibrary.status = MOVIE.STATUS_PLAY;
-        // let offset = (state.movieLibrary.movieListCurrentPage - 1) * MOVIE.MOVIE_PER_PAGE;
-        // let index = state.movieLibrary.focusIndex;
-
-        // state.nowPlaying.index = offset + index;
-        // _getTrackAndPlay(state);
       }
       // ===== omxPlayer navigation =====
       if (stateObj.toggleMoviePlayPause) {
@@ -302,6 +297,9 @@ const vuexStore = new Vuex.Store({
     }
   },
   getters: {
+    getLanguage: function(state) {
+      return state.language;
+    },
     getViewLabel: function(state) {
       if (STR.VIEW_LABEL[state.view][state.language]) {
         return STR.VIEW_LABEL[state.view][state.language];

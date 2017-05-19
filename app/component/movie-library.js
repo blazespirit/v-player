@@ -52,7 +52,7 @@ const movieLibrary = {
         rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.GENRE_ANIMATION);
       }
       else if (genre.toUpperCase() === MOVIE.GENRE.COMEDY.toUpperCase()) {
-        rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.COMEDY);
+        rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.GENRE_COMEDY);
       }
       else if (genre.toUpperCase() === MOVIE.GENRE.CRIME.toUpperCase()) {
         rscKey = RSC_KEY.getResourceKey(language, RSC_KEY.RSC_KEY_LIST.GENRE_CRIME);

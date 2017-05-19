@@ -76,7 +76,6 @@ const scan = function(vuexStore, extDrivePathList) {
           console.error(err);
         })
         .on('done', function() {
-          console.log('DONE !!!');
           console.log('%d dirs, %d files, %d bytes', this.dirs, this.files, this.bytes);
           totalRecord = this.files;
         })
@@ -158,7 +157,7 @@ const getAlbumArt = function(albumId, vuexStore) { // TODO -- consider refactor.
 
 const getTotalTrackNumber = function() {
   musicCollection.count({ type: 'track' }, function(err, count) {
-    // console.log(count); // TODO -- remove if not used.
+    // TODO -- remove if not used.
   });
 };
 

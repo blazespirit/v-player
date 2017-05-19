@@ -61,7 +61,6 @@ const scanExtDrive = function() {
         }
       }
     }
-    console.log(extDrivePathList);
     eventBus.$emit(EVENT.EXT_DRIVE_PATH, extDrivePathList);
   });
 }

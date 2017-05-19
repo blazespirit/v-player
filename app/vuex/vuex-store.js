@@ -68,7 +68,6 @@ const vuexStore = new Vuex.Store({
       state.view = view;
     },
     NAVIGATION_ACTION: function(state, actionObj) {
-      console.log(state.focus);
       let stateObj = actionFlow.getStateObj(state.focus, actionObj.gesture);
       
       if (stateObj.noop) {
@@ -150,7 +149,6 @@ const vuexStore = new Vuex.Store({
         _movieListNextPage(state);
       }
       if (stateObj.playSelectedMovie) {
-        console.log('play selected...');
         state.focus = FOCUSABLE_ITEM.OMX_PLAYER;
         state.movieLibrary.status = MOVIE.STATUS_PLAY;
       }
@@ -162,6 +160,9 @@ const vuexStore = new Vuex.Store({
         else if (state.movieLibrary.status === MOVIE.STATUS_PAUSE) {
           state.movieLibrary.status = MOVIE.STATUS_PLAY;
         }
+      }
+      if (stateObj.stopMovie) {
+        state.movieLibrary.status = MOVIE.STATUS_STOP;
       }
       // ===== now-playing navigation =====
       if (stateObj.toggleMusicPlayPause) {

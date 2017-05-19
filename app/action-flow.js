@@ -68,7 +68,7 @@ const omxPlayerActionMap = new Map([
   [ GESTURE.SWIPE_DOWN,  { noop: true } ],
   [ GESTURE.TAP,         { toggleMoviePlayPause: true } ],
   [ GESTURE.PRESS,       { noop: true } ],
-  [ GESTURE.PINCH,       { noop: true } ]
+  [ GESTURE.PINCH,       { stopMovie: true } ]
 ]);
 
 // action map for play button in now-playing.

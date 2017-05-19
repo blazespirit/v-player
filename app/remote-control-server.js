@@ -1,5 +1,6 @@
 // start an express server to serve remote control web-app file.
 const os = require('os');
+const exec = require('child_process').exec;
 const express = require('express');
 const remoteCtrlServer = express();
 const http = require('http').Server(remoteCtrlServer);
@@ -21,6 +22,16 @@ const configureSocketIO = function() {
     socket.on('action', function(action){
       console.log(`remote fire ${action} action.`);
       vuexStore.commit('NAVIGATION_ACTION', { gesture: action });
+    });
+
+    socket.on('shutdown', function() {
+      console.log('System shutdown...');
+      exec('shutdown now', (error, stdout, stderr) => {
+        if (error) {
+          console.error(`exec error: ${error}`);
+          return;
+        }
+      });
     });
 
     socket.on('disconnect', function(){

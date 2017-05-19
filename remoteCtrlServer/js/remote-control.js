@@ -1,7 +1,7 @@
-const divEl = document.getElementById('main');
+const gestureEl = document.getElementById('gesture');
+const shutdownEl = document.getElementsByClassName('shutdown-icon');
 
-const gesture = new Hammer(divEl);
-
+const gesture = new Hammer(gestureEl);
 const socket = io();
 
 gesture.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
@@ -16,36 +16,41 @@ gesture.get('rotate').set({ enable: false });
 
 // send trigerred event to v-player.
 gesture.on('swipeleft', (ev) => {
-  divEl.textContent = "swipe left";
+  gestureEl.textContent = "swipe left";
   socket.emit('action', 'swipeLeft');
 });
 
 gesture.on('swiperight', (ev) => {
-  divEl.textContent = "swipe right";
+  gestureEl.textContent = "swipe right";
   socket.emit('action', 'swipeRight');
 });
 
 gesture.on('swipeup', (ev) => {
-  divEl.textContent = "swipe up";
+  gestureEl.textContent = "swipe up";
   socket.emit('action', 'swipeUp');
 });
 
 gesture.on('swipedown', (ev) => {
-  divEl.textContent = "swipe down";
+  gestureEl.textContent = "swipe down";
   socket.emit('action', 'swipeDown');
 });
 
 gesture.on('tap', (ev) => {
-  divEl.textContent = "tap";
+  gestureEl.textContent = "tap";
   socket.emit('action', 'tap');
 });
 
 gesture.on('press', (ev) => {
-  divEl.textContent = "press";
+  gestureEl.textContent = "press";
   socket.emit('action', 'press');
 });
 
 gesture.on('pinchend', (ev) => {
-  divEl.textContent = "pinchEnd";
+  gestureEl.textContent = "pinchEnd";
   socket.emit('action', 'pinch');  
+});
+
+// Add event listener for shutdown-icon
+shutdownEl.addEventListener("click", function(){
+  socket.emit('shutdown');
 });

@@ -42,3 +42,18 @@ html, body {
   background-clip: border-box;
   background-repeat: no-repeat;
 }
+
+#main .shutdown-icon {
+  float: right;
+  width: 20vw;
+  height: 20vw;
+  background-image: url('./icon/shutdown.png');
+  background-size: cover;
+  background-clip: border-box;
+  background-repeat: no-repeat;
+}
+
+#gesture {
+  width: 100%;
+  height: 100%;
+}

@@ -119,7 +119,7 @@ const OMX = {
 }
 
 // ===== external drive names (hard-coded) =====
-const EXT_DRIVE_NAME = ['Fujitsu HDD USB Device'];
+const EXT_DRIVE_NAME = ['Fujitsu HDD USB Device', 'HDD'];
 
 module.exports = {
   LANGUAGE: LANGUAGE,

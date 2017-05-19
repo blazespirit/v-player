@@ -112,9 +112,9 @@ const EVENT = {
 
 const OMX = {
   OPTION: {
-    '-b': true,              // Set background to black
+    '-b': true,              // Set background to black.
     '-o': 'hdmi',            // Audio output device.
-    '--no-ghost-box': true,  // No semitransparent boxes behind subtitles
+    '--no-ghost-box': true,  // No semitransparent boxes behind subtitles.
     '--align': 'center',     // Subtitle alignment.
     '--font': '/usr/share/fonts/truetype/wqy/wqy-microhei.ttc' // subtitle font for chinese.
   }

@@ -162,6 +162,7 @@ const vuexStore = new Vuex.Store({
         }
       }
       if (stateObj.stopMovie) {
+        state.focus = FOCUSABLE_ITEM.MOVIE_LIST;
         state.movieLibrary.status = MOVIE.STATUS_STOP;
       }
       // ===== now-playing navigation =====

@@ -77,7 +77,7 @@ const MOVIE = {
     HORROR   : 'horror',
     MYSTERY  : 'mystery',
     ROMANCE  : 'romance',
-    SCI_FI   : 'sciFi',
+    SCI_FI   : 'sci-fi',
     UNKNOWN  : 'unknown'
   }
 }

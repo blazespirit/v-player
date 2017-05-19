@@ -43,7 +43,7 @@ html, body {
   background-repeat: no-repeat;
 }
 
-#main .shutdown-icon {
+#shutdown {
   float: right;
   width: 20vw;
   height: 20vw;

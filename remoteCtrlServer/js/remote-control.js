@@ -1,5 +1,4 @@
 const gestureEl = document.getElementById('gesture');
-const shutdownEl = document.getElementsByClassName('shutdown-icon');
 
 const gesture = new Hammer(gestureEl);
 const socket = io();
@@ -51,6 +50,7 @@ gesture.on('pinchend', (ev) => {
 });
 
 // Add event listener for shutdown-icon
-shutdownEl.addEventListener("click", function(){
+document.getElementById('shutdown').addEventListener("click", function() {
+  gestureEl.textContent = "System Shutdown...";
   socket.emit('shutdown');
 });

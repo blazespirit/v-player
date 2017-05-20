@@ -164,19 +164,27 @@ const vuexStore = new Vuex.Store({
       }
       if (stateObj.seekBackward) {
         state.movieLibrary.seekStatus = MOVIE.STATUS_SEEK_BACKWARD;
-        state.movieLibrary.seekStatus = null;
+        setTimeout(() => {
+          vuexStore.commit('UPDATE_MOVIE_SEEK_STATUS', null);
+        }, 200);
       }
       if (stateObj.seekForward) {
         state.movieLibrary.seekStatus = MOVIE.STATUS_SEEK_FORWARD;
-        state.movieLibrary.seekStatus = null;
+        setTimeout(() => {
+          vuexStore.commit('UPDATE_MOVIE_SEEK_STATUS', null);
+        }, 200);
       }
       if (stateObj.seekFastBackward) {
         state.movieLibrary.seekStatus = MOVIE.STATUS_SEEK_FAST_BACKWARD;
-        state.movieLibrary.seekStatus = null;
+        setTimeout(() => {
+          vuexStore.commit('UPDATE_MOVIE_SEEK_STATUS', null);
+        }, 200);
       }
       if (stateObj.seekFastForward) {
         state.movieLibrary.seekStatus = MOVIE.STATUS_SEEK_FAST_FORWARD;
-        state.movieLibrary.seekStatus = null;
+        setTimeout(() => {
+          vuexStore.commit('UPDATE_MOVIE_SEEK_STATUS', null);
+        }, 200);
       }
       if (stateObj.stopMovie) {
         state.focus = FOCUSABLE_ITEM.MOVIE_LIST;
@@ -258,6 +266,9 @@ const vuexStore = new Vuex.Store({
     },
     UPDATE_MOVIE_STATUS: function (state, status) {
       state.movieLibrary.status = status;
+    },
+    UPDATE_MOVIE_SEEK_STATUS: function (state, seekStatus) {
+      state.movieLibrary.seekStatus = seekStatus;
     },
     // ========== now-playing ==========
     UPDATE_TRACK: function(state, trackObj) {

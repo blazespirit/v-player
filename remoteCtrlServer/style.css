@@ -1,6 +1,5 @@
 :root {
   font-family: Roboto, Helvetica, sans-serif;
-  cursor: none;
 }
 
 @font-face {
@@ -42,6 +41,7 @@ html, body {
   background-size: cover;
   background-clip: border-box;
   background-repeat: no-repeat;
+  cursor: none;
 }
 
 #shutdown {

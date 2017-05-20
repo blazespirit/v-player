@@ -152,16 +152,16 @@ const movieLibrary = {
     },
     seekStatus: function(status) {
       if (status === MOVIE.STATUS_SEEK_BACKWARD) {
-        this.movie.seekBackward;
+        this.movie.seekBackward();
       }
       else if (status === MOVIE.STATUS_SEEK_FORWARD) {
-        this.movie.seekForward;
+        this.movie.seekForward();
       }
       else if (status === MOVIE.STATUS_SEEK_FAST_BACKWARD) {
-        this.movie.seekFastBackward;
+        this.movie.seekFastBackward();
       }
       else if (status === MOVIE.STATUS_SEEK_FAST_FORWARD) {
-        this.movie.seekFastForward;
+        this.movie.seekFastForward();
       }
     }
   },

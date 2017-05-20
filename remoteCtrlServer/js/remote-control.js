@@ -51,6 +51,25 @@ gesture.on('pinchend', (ev) => {
 
 // Add event listener for shutdown-icon
 document.getElementById('shutdown').addEventListener("click", function() {
+  showPopup();
+});
+
+document.getElementById('confirm').addEventListener("click", function() {
   gestureEl.textContent = "System Shutdown...";
   socket.emit('shutdown');
+  hidePopup();
 });
+
+document.getElementById('cancel').addEventListener("click", function() {
+  hidePopup();
+});
+
+function showPopup() {
+  let popupEl = document.getElementById('popup');
+  popupEl.className = "show";
+}
+
+function hidePopup() {
+  let popupEl = document.getElementById('popup');
+  popupEl.className = "";
+}

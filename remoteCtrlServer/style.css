@@ -41,7 +41,6 @@ html, body {
   background-size: cover;
   background-clip: border-box;
   background-repeat: no-repeat;
-  cursor: none;
 }
 
 #shutdown {

@@ -42,7 +42,8 @@ const vuexStore = new Vuex.Store({
       movieListCurrentPage: 1,
       movieListTotalPage: null,
       focusIndex: 0, // array based index. (start from 0)
-      status: null
+      status: null,
+      seekStatus: null
     },
 
     // state for now-playing component
@@ -160,6 +161,22 @@ const vuexStore = new Vuex.Store({
         else if (state.movieLibrary.status === MOVIE.STATUS_PAUSE) {
           state.movieLibrary.status = MOVIE.STATUS_PLAY;
         }
+      }
+      if (stateObj.seekBackward) {
+        state.movieLibrary.seekStatus = MOVIE.STATUS_SEEK_BACKWARD;
+        state.movieLibrary.seekStatus = null;
+      }
+      if (stateObj.seekForward) {
+        state.movieLibrary.seekStatus = MOVIE.STATUS_SEEK_FORWARD;
+        state.movieLibrary.seekStatus = null;
+      }
+      if (stateObj.seekFastBackward) {
+        state.movieLibrary.seekStatus = MOVIE.STATUS_SEEK_FAST_BACKWARD;
+        state.movieLibrary.seekStatus = null;
+      }
+      if (stateObj.seekFastForward) {
+        state.movieLibrary.seekStatus = MOVIE.STATUS_SEEK_FAST_FORWARD;
+        state.movieLibrary.seekStatus = null;
       }
       if (stateObj.stopMovie) {
         state.focus = FOCUSABLE_ITEM.MOVIE_LIST;
@@ -347,6 +364,9 @@ const vuexStore = new Vuex.Store({
     },
     getMovieStatus: function(state) {
       return state.movieLibrary.status;
+    },
+    getMovieSeekStatus: function(state) {
+      return state.movieLibrary.seekStatus;
     },
     getMovieFilePath: function(state) {
       let movieList = state.movieLibrary.movieList;

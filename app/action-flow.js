@@ -62,10 +62,10 @@ const movieListActionMap = new Map([
 // action map for omxPlayer.
 const omxPlayerActionMap = new Map([
   // key & value pair array.
-  [ GESTURE.SWIPE_LEFT,  { noop: true } ], // no operation.
-  [ GESTURE.SWIPE_RIGHT, { noop: true } ],
-  [ GESTURE.SWIPE_UP,    { noop: true } ],
-  [ GESTURE.SWIPE_DOWN,  { noop: true } ],
+  [ GESTURE.SWIPE_LEFT,  { seekBackward: true } ], // no operation.
+  [ GESTURE.SWIPE_RIGHT, { seekForward: true } ],
+  [ GESTURE.SWIPE_UP,    { seekFastBackward: true } ],
+  [ GESTURE.SWIPE_DOWN,  { seekFastForward: true } ],
   [ GESTURE.TAP,         { toggleMoviePlayPause: true } ],
   [ GESTURE.PRESS,       { noop: true } ],
   [ GESTURE.PINCH,       { stopMovie: true } ]

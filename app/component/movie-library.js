@@ -103,6 +103,9 @@ const movieLibrary = {
     status: function() {
       return this.$store.getters.getMovieStatus;
     },
+    seekStatus: function() {
+      return this.$store.getters.getMovieSeekStatus;
+    },
     viewChange: function() {
       return this.$store.getters.getView;
     },
@@ -145,6 +148,20 @@ const movieLibrary = {
       else if (status === MOVIE.STATUS_STOP) {
         this.movie.stop();
         this.movie = null;
+      }
+    },
+    seekStatus: function(status) {
+      if (status === MOVIE.STATUS_SEEK_BACKWARD) {
+        this.movie.seekBackward;
+      }
+      else if (status === MOVIE.STATUS_SEEK_FORWARD) {
+        this.movie.seekForward;
+      }
+      else if (status === MOVIE.STATUS_SEEK_FAST_BACKWARD) {
+        this.movie.seekFastBackward;
+      }
+      else if (status === MOVIE.STATUS_SEEK_FAST_FORWARD) {
+        this.movie.seekFastForward;
       }
     }
   },

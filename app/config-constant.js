@@ -68,6 +68,10 @@ const MOVIE = {
   STATUS_PLAY: 'play',
   STATUS_PAUSE: 'pause',
   STATUS_STOP: 'stop',
+  STATUS_SEEK_BACKWARD: 'seekBackward',
+  STATUS_SEEK_FORWARD: 'seekForward',
+  STATUS_SEEK_FAST_BACKWARD: 'seekFastBackward',
+  STATUS_SEEK_FAST_FORWARD: 'seekFastForward',
   GENRE: {
     ACTION   : 'action',
     ANIMATION: 'animation',

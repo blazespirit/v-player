@@ -1,0 +1,54 @@
+:root {
+    font-family: Roboto,
+                 msjh,
+                 Gulim,
+                 Helvetica,
+                 sans-serif;
+    font-size: 5vh;
+    color: white;
+    user-select: none;
+    cursor: none;
+}
+  
+@font-face {
+    font-family: Roboto;
+    font-weight: 100;
+    font-style: normal;
+    src: url('./assets/font/Roboto-Thin.ttf');
+}
+  
+@font-face {
+    font-family: Roboto;
+    font-weight: 300;
+    font-style: normal;
+    src: url('./assets/font/Roboto-Light.ttf');
+}
+  
+@font-face {
+    font-family: Roboto;
+    font-weight: 500;
+    font-style: normal;
+    src: url('./assets/font/Roboto-Medium.ttf');
+}
+  
+/* font for chinese & japanese*/
+@font-face {
+    font-family: msjh;
+    font-style: normal;
+    src: url('./assets/font/msjh.ttf');
+}
+  
+/* font for korean */
+@font-face {
+    font-family: Gulim;
+    font-style: normal;
+    src: url('./assets/font/Gulim.ttf');
+}
+  
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}

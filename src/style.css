@@ -7,7 +7,7 @@
     font-size: 5vh;
     color: white;
     user-select: none;
-    cursor: none;
+    /* cursor: none; */
 }
   
 @font-face {

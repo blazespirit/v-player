@@ -6,14 +6,11 @@ let win;
 
 function createWindow() {
     win = new BrowserWindow({
-        fullscreen: true, // launch the app in full screen.
-        frame: false,     // create frameless window.
+        fullscreen: true,
+        frame: false,
         webPreferences: {
             webSecurity: false
         }
-        // resizable: false, // disable resize. *note: on raspbian, set this to false will disable full screen.
-        // width: 800,
-        // height: 600
     });
 
     win.loadURL(url.format({
@@ -25,7 +22,6 @@ function createWindow() {
     // Open the DevTools.
     win.webContents.openDevTools();
 
-    // Emitted when the window is closed.
     win.on('closed', () => {
         win = null;
     });
